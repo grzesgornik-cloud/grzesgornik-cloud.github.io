@@ -20,7 +20,7 @@ metrics:
   - value: '100'
     label: automated tests passing
 order: 3
-draft: true
+draft: false
 ---
 
 ## The idea

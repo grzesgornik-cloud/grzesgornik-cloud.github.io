@@ -46,13 +46,10 @@ Here η is the fraction of the intended roll split that survives the flex. A rig
 K_ch = K(1 − X)·ρ(1 − ρ) / X
 ```
 
-For our car, the total roll stiffness is K = 713 Nm/°, with a 52:48 roll split (ρ = 0.52) and a 55:45 weight distribution (w = 0.55). An 8% loss would need 2,047 Nm/°, about 2.9 times the roll stiffness.
+In the report's worked example, with a total roll stiffness of K = 713 Nm/°, a 52:48 roll split (ρ = 0.52) and a 55:45 weight distribution (w = 0.55), an 8% loss needs 2,047 Nm/°, about 2.9 times the roll stiffness.
 
-The chassis isn't the only thing that flexes. Wishbones and uprights add their own compliance in series, so we set a target for them too: 22,000 Nm/°, in line with the usual rule of thumb of ten times the chassis. For simulation, I converted that to an equivalent spring at each corner: about 1,750 N/mm, assuming a 1.2 m track and an equal front-to-rear split. With an overall loss of about 10% across chassis and installation, the chassis target came out at **1,750 Nm/°**.
+The chassis isn't the only thing that flexes. Wishbones and uprights add their own compliance in series, so we set a target for them too: 22,000 Nm/°, in line with the usual rule of thumb of ten times the chassis. For simulation, I converted that to an equivalent spring at each corner: about 1,750 N/mm, assuming a 1.2 m track and an equal front-to-rear split. With the installation stiffness included, the report's example came out at about 2,200 Nm/° for the chassis alone. The suspension's roll stiffness was later lowered, and running the same method again brought the chassis target down to **1,750 Nm/°**.
 
-![Line chart of the share of the roll-split effect lost to chassis flex, falling from about 19% at 800 Nm per degree to about 6% at 3,000 Nm per degree. The 2026 chassis, estimated at 1,180 Nm per degree, loses 13.7%; the 1,750 target loses 9.9%; the 2027 design at 1,980 loses 8.9%.](/projects/chassis-2027/roll-split-loss.png)
-
-The chart is the same model plotted across a range of chassis stiffness, including the 22,000 Nm/° installation stiffness. On those assumptions, the 2026 chassis was giving away about 14% of the intended roll split, and the 2027 design gives away under 9%. The 2026 figure is estimated by working back from the 68% stiffness gain.
 
 ## Three designs into one
 
