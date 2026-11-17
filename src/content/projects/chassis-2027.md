@@ -32,7 +32,9 @@ UCD Formula Student had always redesigned half of the chassis each year. For 202
 
 Before designing anything, we needed to know how stiff was stiff enough. In a corner, load transfers to the outside tyres, and the team sets how that transfer is split between the front and rear axles by choosing the roll stiffness at each end. That split is a large part of the car's handling balance. A chassis that twists between the axles quietly undoes it. An infinitely stiff chassis would be infinitely heavy, so the real question is how much of the intended roll split we're willing to lose to flex.
 
-This was my main contribution: I wrote the team's method for setting the target. It's based on the paper *The Effect of Chassis Stiffness on Race Car Handling Balance*, with pointers from *Design, Analysis and Testing of a Formula SAE Car Chassis*. It models the car as three springs in series: front roll stiffness ρK, the chassis K<sub>ch</sub>, and rear roll stiffness (1 − ρ)K. Solving for the torque the chassis carries gives the front load transfer distribution:
+This was my main contribution: I wrote the team's method for setting the target, with a calculator the rest of the team can rerun. It's based on Deakin, Crolla, Ramirez and Hanley's paper *The Effect of Chassis Stiffness on Race Car Handling Balance* (SAE 2000-01-3554), with pointers from *Design, Analysis and Testing of a Formula SAE Car Chassis*.
+
+The paper gives a rule of thumb: the acceptable loss X (in percent) divided by 20 equals the ratio of total roll stiffness to chassis stiffness. But that rule was read from a graph for a car with a 50:50 weight split and a 60:40 roll split, and ours is 55:45 and 52:48. So I derived a closed-form version from the paper's own equations. It models the car as three springs in series: front roll stiffness ρK, the chassis K<sub>ch</sub>, and rear roll stiffness (1 − ρ)K. Solving for the torque the chassis carries gives the front load transfer distribution:
 
 ```text
 LTD_front = w + (ρ − w)·η
@@ -46,10 +48,13 @@ Here η is the fraction of the intended roll split that survives the flex. A rig
 K_ch = K(1 − X)·ρ(1 − ρ) / X
 ```
 
-In the report's worked example, with a total roll stiffness of K = 713 Nm/°, a 52:48 roll split (ρ = 0.52) and a 55:45 weight distribution (w = 0.55), an 8% loss needs 2,047 Nm/°, about 2.9 times the roll stiffness.
+For our car, that means a total roll stiffness of K = 542 Nm/°, with ρ = 0.52, w = 0.55 and an acceptable loss of 8%. The result is an effective stiffness at the wheels of 1,556 Nm/°, about 2.9 times the roll stiffness. That's 10% stiffer than the paper's rule of thumb asks for, which matters because the rule is only claimed for cars near a 50:50 weight split.
 
-The chassis isn't the only thing that flexes. Wishbones and uprights add their own compliance in series, so we set a target for them too: 22,000 Nm/°, in line with the usual rule of thumb of ten times the chassis. For simulation, I converted that to an equivalent spring at each corner: about 1,750 N/mm, assuming a 1.2 m track and an equal front-to-rear split. With the installation stiffness included, the report's example came out at about 2,200 Nm/° for the chassis alone. The suspension's roll stiffness was later lowered, and running the same method again brought the chassis target down to **1,750 Nm/°**.
+The chassis isn't the only thing that flexes. Wishbones and uprights add compliance in series, so we gave them a placeholder target of 16,000 Nm/°, about ten times the effective target, to be replaced with FEA or measured values. For simulation, that converts to an equivalent spring of about 1,270 N/mm at each corner, assuming a 1.2 m track. Taking the installation flex out leaves a chassis-only target of 1,723 Nm/°, which we rounded to **1,750 Nm/°**. An earlier version of the report used a higher roll stiffness of 713 Nm/°, which gave about 2,200 Nm/°. Lowering the roll stiffness brought the target down.
 
+![Line chart of the share of the roll-split effect lost to flex, using the final roll stiffness of 542 Nm per degree and installation stiffness of 16,000. Loss falls from about 15% at 800 Nm per degree to about 5% at 3,000. The previous chassis, estimated at 1,180, loses 11.0%; the 1,750 target loses 7.9%, inside the 8% limit; the 2027 design at 1,980 loses 7.1%.](/projects/chassis-2027/roll-split-loss.png)
+
+The chart plots the same model across a range of chassis stiffness. With this car's suspension, the previous chassis would give away about 11% of the intended roll split, against about 7% for the 2027 design. The previous chassis's stiffness is estimated by working back from the 68% gain.
 
 ## Three designs into one
 
@@ -79,7 +84,7 @@ The target is design guidance, not an absolute, and I wrote its limits into the 
 
 - **It's an idealised model.** It treats the car as three torsional springs, with the chassis twisting uniformly between the axles. It ignores bending and local flex around the suspension pickups, assumes the same centre-of-gravity height at both axles, and doesn't model anything dynamic.
 - **It isn't validated yet.** The method comes from a paper on an older Formula Student car, and we couldn't compare it against that paper's original curves.
-- **It hinges on one judgement: the acceptable loss.** The source study allowed up to 20%. We chose lower, because a smaller, heavier electric car is harder to balance. Small changes here move the target a lot.
+- **It hinges on one judgement: the acceptable loss.** The source study allowed up to 20%. We chose 8%, because a smaller, heavier electric car is harder to balance. Small changes move the target a lot: with everything else the same, 7.5% calls for about 1,860 Nm/° and 10% for about 1,320 Nm/°.
 - **Load transfer is only a stand-in for handling balance.** Tyres, roll centres, kinematics and the differential all play a part too.
 
 Testing comes first. That means a static torsion test on the real chassis, with measurements at several points along its length and repeated loading and unloading to check for nonlinear behaviour. That's paired with stiffness tests on the suspension corner assemblies and measurements of the real roll stiffness and centre-of-gravity height. Skidpad runs for understeer gradient and roll angle will then show whether the handling matches what the model predicts.
