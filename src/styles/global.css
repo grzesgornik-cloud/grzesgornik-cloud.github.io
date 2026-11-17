@@ -92,6 +92,10 @@ p { margin: 0; }
 .prose ul { padding-left: var(--s5); margin: 0 0 var(--s4); color: #cfcdc7; }
 .prose img { border-radius: var(--radius); margin-block: var(--s6); }
 .prose strong { color: var(--text); }
+.prose table { width: 100%; border-collapse: collapse; margin: var(--s5) 0 var(--s6); font-size: 0.9375rem; }
+.prose th { font-family: var(--mono); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 0 var(--s3) var(--s3) 0; border-bottom: 1px solid var(--line-strong); }
+.prose td { padding: var(--s3) var(--s3) var(--s3) 0; border-bottom: 1px solid var(--line); color: #cfcdc7; vertical-align: top; }
+.prose td:nth-child(n+3) { font-family: var(--mono); font-size: 0.875rem; color: var(--text); white-space: nowrap; }
 
 /* ---------- Motion ---------- */
 @view-transition { navigation: auto; }
