@@ -1,0 +1,163 @@
+{
+  "name": "Greg Gornik",
+  "fullName": "Grzegorz Gornik",
+  "role": "Mechanical engineering student, UCD",
+  "location": "Dublin, Ireland",
+  "intro": "I'm a chassis engineer on UCD Formula Student. I design structural parts to a stiffness or strength target, prove them in FEA, and take out every gram the numbers allow.",
+  "availability": "Looking for a mechanical design internship in motorsport, summer 2027",
+  "email": "grzesgornik@gmail.com",
+  "phone": "",
+  "linkedin": "https://www.linkedin.com/in/grzegorz-gornik-89a62b2b8/",
+  "cv": "/cv/Grzegorz_Gornik_CV.pdf",
+  "timing": [
+    {
+      "sector": "S1",
+      "label": "2027 chassis",
+      "value": "+68%",
+      "note": "torsional stiffness at the same frame mass"
+    },
+    {
+      "sector": "S2",
+      "label": "2026 TSAC",
+      "value": "−8 kg",
+      "note": "steel to aluminium, proven in FEA"
+    },
+    {
+      "sector": "S3",
+      "label": "Chassis stiffness",
+      "value": "1,980",
+      "unit": "Nm/°",
+      "note": "13% above the 1,750 target I set"
+    }
+  ],
+  "about": [
+    "I'm in third year of the five-year BE/ME in Mechanical Engineering at University College Dublin. Most of my time outside lectures goes into UCD Formula Student, where I work on the team's first full chassis redesign and run the workshop.",
+    "Before engineering, I spent three and a half years in a bike shop's workshop. Watching parts come back broken taught me that a component nobody can service or trust isn't finished, however light it is. I design with that in mind."
+  ],
+  "experience": [
+    {
+      "role": "Workshop Manager",
+      "org": "UCD Formula Student",
+      "dates": "Sep 2026 – now"
+    },
+    {
+      "role": "Chassis Mechanical Engineer",
+      "org": "UCD Formula Student",
+      "dates": "Sep 2025 – now"
+    },
+    {
+      "role": "Mechanical Engineering Intern",
+      "org": "Mercury",
+      "dates": "Jun – Sep 2025"
+    },
+    {
+      "role": "Workshop Administrator",
+      "org": "Cycle SuperStore",
+      "dates": "2022 – 2026"
+    },
+    {
+      "role": "Team Mechanic, MTB Officer and PRO",
+      "org": "UCD Cycling Club",
+      "dates": "Sep 2025 – now"
+    }
+  ],
+  "skills": [
+    {
+      "group": "CAD",
+      "items": [
+        {
+          "name": "SolidWorks",
+          "detail": "Certified SOLIDWORKS Associate"
+        },
+        {
+          "name": "Onshape",
+          "detail": "2027 chassis and 2026 TSAC"
+        },
+        {
+          "name": "CATIA 3DEXPERIENCE",
+          "detail": ""
+        },
+        {
+          "name": "Autodesk",
+          "detail": "Drawing checks at Mercury"
+        }
+      ]
+    },
+    {
+      "group": "Simulation",
+      "items": [
+        {
+          "name": "Ansys Mechanical",
+          "detail": "Beam and solid FEA: chassis, TSAC, suspension mounts"
+        },
+        {
+          "name": "MATLAB",
+          "detail": "MATLAB Onramp"
+        },
+        {
+          "name": "Excel",
+          "detail": "Drawing and data cross-checks at Mercury"
+        }
+      ]
+    },
+    {
+      "group": "Methods",
+      "items": [
+        {
+          "name": "Stiffness targeting",
+          "detail": "Set the 2027 chassis target"
+        },
+        {
+          "name": "Design to weight",
+          "detail": "Chassis and TSAC"
+        },
+        {
+          "name": "Design for manufacture",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "group": "Making",
+      "items": [
+        {
+          "name": "3D printing",
+          "detail": "Race tracker enclosure"
+        },
+        {
+          "name": "Assembly and servicing",
+          "detail": "Bike workshop and team mechanic"
+        },
+        {
+          "name": "Python",
+          "detail": "Race tracker, AI-assisted"
+        }
+      ]
+    }
+  ],
+  "education": {
+    "school": "University College Dublin",
+    "course": "BE / ME Mechanical Engineering",
+    "dates": "2024 – 2029",
+    "detail": "GPA 3.55 / 4.2"
+  },
+  "languages": "English and Polish (fluent)",
+  "strengths": [
+    {
+      "title": "Calm under race pressure",
+      "evidence": "Team mechanic for UCD Cycling at national races, fixing bikes from the team car mid-stage."
+    },
+    {
+      "title": "Keeps a shared workshop running",
+      "evidence": "Workshop Manager for UCD Formula Student: tools tracked, software maintained, space kept safe."
+    },
+    {
+      "title": "Works across disciplines",
+      "evidence": "Designed the TSAC's mechanical layout around the electrical team's cells and BMS."
+    },
+    {
+      "title": "Represents other people",
+      "evidence": "Third-year rep for the Mechanical Engineering Society, between staff and students."
+    }
+  ]
+}

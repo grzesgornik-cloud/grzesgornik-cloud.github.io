@@ -1,0 +1,14 @@
+---
+// Tabler outline icons, inlined at build time. Add new ones by copying an SVG
+// from node_modules/@tabler/icons/icons/outline/ into src/icons/.
+interface Props { name: string; label?: string }
+const { name, label } = Astro.props;
+const icons = import.meta.glob<string>('../icons/*.svg', { query: '?raw', import: 'default', eager: true });
+const raw = icons[`../icons/${name}.svg`];
+if (!raw) throw new Error(`Icon "${name}" not found in src/icons/`);
+const svg = raw
+  .replace(/<\?xml.*?\?>/, '')
+  .replace(/\s(width|height|class)="[^"]*"/g, '')
+  .replace('<svg', `<svg class="icon" ${label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"'}`);
+---
+<Fragment set:html={svg} />

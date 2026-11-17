@@ -1,0 +1,39 @@
+---
+// Progress shown as engineering stages rather than an arbitrary percentage.
+import { STAGES } from '../data/stages';
+interface Props { stage: (typeof STAGES)[number]; compact?: boolean }
+const { stage, compact = false } = Astro.props;
+const steps = STAGES.filter((s) => s !== 'Complete');
+const done = stage === 'Complete';
+const current = done ? steps.length : steps.indexOf(stage as (typeof steps)[number]);
+const label = done ? 'Complete' : `In progress: ${stage}`;
+---
+<div class:list={['stage', { 'stage--compact': compact, 'stage--done': done }]}>
+  <div class="stage__head">
+    <span class="label">{done ? 'Complete' : 'In progress'}</span>
+    {!done && <span class="label stage__now">{stage} · {current + 1}/{steps.length}</span>}
+  </div>
+  <ol class="stage__bar" role="img" aria-label={label}>
+    {steps.map((s, i) => (
+      <li class:list={[{ 'is-done': i < current || done, 'is-now': i === current && !done }]}>
+        {!compact && <span class="stage__name">{s}</span>}
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .stage__head { display: flex; justify-content: space-between; margin-bottom: var(--s2); }
+  .stage__now { color: var(--text); }
+  .stage__bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s1); list-style: none; margin: 0; padding: 0; }
+  .stage__bar li { position: relative; padding-top: var(--s3); }
+  .stage__bar li::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; border-radius: var(--radius); background: var(--line); }
+  .stage__bar li.is-done::before { background: var(--accent); }
+  /* The live stage fills half-way: work is happening here. */
+  .stage__bar li.is-now::before { background: linear-gradient(90deg, var(--accent) 50%, var(--line) 50%); }
+  .stage__name { display: block; font-family: var(--mono); font-size: 0.6875rem; color: var(--muted); letter-spacing: 0.02em; }
+  .is-now .stage__name { color: var(--text); }
+  .stage--compact .stage__bar li { padding-top: 4px; }
+  .stage--done .label { color: var(--accent); }
+  @media (max-width: 30rem) { .stage__name { font-size: 0; } }
+</style>

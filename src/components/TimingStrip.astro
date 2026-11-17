@@ -1,0 +1,42 @@
+---
+// Results shown like sectors on a timing screen. Green = personal best.
+interface Cell { sector?: string; label: string; value: string; unit?: string; note: string }
+interface Props { cells: Cell[]; size?: 'lg' | 'md' }
+const { cells, size = 'lg' } = Astro.props;
+---
+<dl class={`timing timing--${size}`} style={`--n:${cells.length}`}>
+  {cells.map((c, i) => (
+    <div class="timing__cell">
+      <dt class="label">{c.sector ?? `S${i + 1}`} <span aria-hidden="true">·</span> {c.label}</dt>
+      <dd>
+        <span class="timing__value">{c.value}{c.unit && <span class="timing__unit">{c.unit}</span>}</span>
+        <span class="timing__note">{c.note}</span>
+      </dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .timing { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); margin: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .timing__cell { position: relative; padding: var(--s5); border-left: 1px solid var(--line); }
+  .timing__cell:first-child { border-left: 0; }
+  .timing__cell::before {
+    content: ''; position: absolute; inset: -1px var(--s5) auto; height: 3px; background: var(--accent);
+    transform-origin: left; animation: sector 0.6s var(--ease) both;
+  }
+  .timing__cell:nth-child(2)::before { animation-delay: 0.15s; }
+  .timing__cell:nth-child(3)::before { animation-delay: 0.3s; }
+  @keyframes sector { from { transform: scaleX(0); } }
+  dt { margin-bottom: var(--s3); }
+  dd { margin: 0; display: grid; gap: var(--s1); }
+  .timing__value { font-family: var(--mono); font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1.1; }
+  .timing--lg .timing__value { font-size: clamp(1.75rem, 3.6vw, 2.75rem); }
+  .timing--md .timing__value { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  .timing__unit { font-size: 0.45em; margin-left: var(--s2); color: var(--muted); letter-spacing: 0; }
+  .timing__note { font-size: 0.875rem; color: var(--muted); line-height: 1.45; }
+  @media (max-width: 44rem) {
+    .timing { grid-template-columns: 1fr; }
+    .timing__cell { border-left: 0; border-top: 1px solid var(--line); }
+    .timing__cell:first-child { border-top: 0; }
+  }
+</style>

@@ -1,0 +1,182 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import TimingStrip from '../../components/TimingStrip.astro';
+import StageBar from '../../components/StageBar.astro';
+import { getProjects } from '../../data/projects';
+import { img } from '../../data/images';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const p = project.data;
+const { Content, headings } = await render(project);
+const toc = headings.filter((h) => h.depth === 2);
+const og = p.cover ? (await getImage({ src: img(p.cover), width: 1200, format: 'jpg' })).src : undefined;
+const large = await Promise.all(p.gallery.map((g) => getImage({ src: img(g.image), width: 2000 })));
+---
+<Base title={p.title} description={p.summary} image={og}>
+  <article>
+    <header class="wrap head">
+      <a class="back mono" href="/#work"><Icon name="arrow-left" /> All work</a>
+      <p class="label">{p.team} · {p.year}</p>
+      <h1>{p.title}</h1>
+      <p class="lead">{p.summary}</p>
+
+      <dl class="spec">
+        <div><dt class="label">Role</dt><dd>{p.role}</dd></div>
+        <div><dt class="label">Team</dt><dd>{p.team}</dd></div>
+        <div><dt class="label">Tools</dt><dd>{p.tools.join(', ')}</dd></div>
+        <div class="spec__stage"><dt class="sr-only">Progress</dt><dd><StageBar stage={p.stage} /></dd></div>
+      </dl>
+    </header>
+
+    {p.cover && (
+      <figure class="wrap cover" style={`view-transition-name: cover-${project.id}`}>
+        <Image src={img(p.cover)} alt={p.coverAlt} widths={[800, 1400, 2000]} sizes="(max-width: 72rem) 100vw, 72rem" loading="eager" fetchpriority="high" />
+      </figure>
+    )}
+
+    {p.metrics.length > 0 && (
+      <div class="wrap metrics">
+        <TimingStrip size="md" cells={p.metrics.map((m, i) => ({ sector: `0${i + 1}`, label: 'Result', value: m.value, note: m.label }))} />
+      </div>
+    )}
+
+    <div class="wrap body">
+      {toc.length > 1 && (
+        <nav class="toc" aria-label="Sections">
+          <p class="label">Contents</p>
+          <ol>{toc.map((h, i) => <li><a href={`#${h.slug}`}><span class="mono">0{i + 1}</span>{h.text}</a></li>)}</ol>
+        </nav>
+      )}
+      <div class="prose"><Content /></div>
+    </div>
+
+    {p.gallery.length > 0 && (
+      <section class="wrap gallery" aria-labelledby="gallery-title">
+        <h2 id="gallery-title" class="label">Gallery · {p.gallery.length} images</h2>
+        <ul>
+          {p.gallery.map((g, i) => (
+            <li>
+              <figure>
+                <button type="button" class="gallery__open" data-full={large[i].src} data-alt={g.alt} data-caption={g.caption ?? ''} aria-label={`Enlarge: ${g.alt}`}>
+                  <Image src={img(g.image)} alt={g.alt} widths={[400, 800]} sizes="(max-width: 48rem) 100vw, 33vw" />
+                </button>
+                {g.caption && <figcaption>{g.caption}</figcaption>}
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {next && next.id !== project.id && (
+      <nav class="wrap next" aria-label="Next project">
+        <a href={`/projects/${next.id}/`}>
+          <span class="label">Next project</span>
+          <span class="next__title">{next.data.title} <Icon name="arrow-right" /></span>
+        </a>
+      </nav>
+    )}
+  </article>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button type="button" class="lightbox__close btn" aria-label="Close"><Icon name="x" /></button>
+    <img alt="" />
+    <p class="lightbox__caption"></p>
+  </dialog>
+</Base>
+
+<script>
+  // Marks the section you're reading in the contents list.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
+  if (links.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) links.forEach((l) => l.classList.toggle('is-active', l.hash === `#${e.target.id}`));
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    links.forEach((l) => { const t = document.getElementById(l.hash.slice(1)); if (t) io.observe(t); });
+  }
+  const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
+  if (dialog) {
+    const img = dialog.querySelector('img')!;
+    const cap = dialog.querySelector('.lightbox__caption')!;
+    document.querySelectorAll<HTMLButtonElement>('.gallery__open').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        open(btn.dataset.full!, btn.dataset.alt!, btn.dataset.caption!);
+      });
+    });
+    // The cover and write-up images open full size too.
+    document.querySelectorAll<HTMLImageElement>('.cover img, .prose img').forEach((el) => {
+      el.style.cursor = 'zoom-in';
+      el.tabIndex = 0;
+      const go = () => open(el.currentSrc || el.src, el.alt, '');
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+    });
+    function open(src: string, alt: string, caption: string) {
+      img.src = src; img.alt = alt; cap.textContent = caption || alt; dialog!.showModal();
+    }
+    dialog.querySelector('.lightbox__close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  }
+</script>
+
+<style>
+  .head { padding-block: var(--s8) var(--s7); }
+  .back { display: inline-flex; align-items: center; gap: var(--s2); color: var(--muted); text-decoration: none; margin-bottom: var(--s7); }
+  .back:hover { color: var(--text); }
+  h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); font-stretch: 122%; font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; margin: var(--s4) 0 var(--s5); max-width: 18ch; }
+  .lead { font-size: clamp(1.125rem, 1.8vw, 1.375rem); line-height: 1.45; max-width: 42rem; color: #cfcdc7; }
+
+  .spec { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 2fr); gap: var(--s5); margin: var(--s7) 0 0; padding-top: var(--s5); border-top: 1px solid var(--line); }
+  .spec dd { margin: var(--s2) 0 0; }
+  .spec__stage dd { margin: 0; }
+  @media (max-width: 52rem) { .spec { grid-template-columns: 1fr 1fr; } .spec__stage { grid-column: 1 / -1; } }
+
+  .cover { margin-block: 0; }
+  .cover :global(img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 58%; border-radius: var(--radius); border: 1px solid var(--line); }
+  .metrics { margin-top: var(--s6); }
+  .body { padding-block: var(--s9) var(--s8); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--s6); align-items: start; }
+  .toc { position: sticky; top: var(--s9); }
+  .toc ol { list-style: none; margin: var(--s4) 0 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a { display: flex; gap: var(--s3); padding: var(--s2) var(--s4); color: var(--muted); text-decoration: none; font-size: 0.9375rem; margin-left: -1px; border-left: 1px solid transparent; transition: color 0.15s var(--ease), border-color 0.15s var(--ease); }
+  .toc a:hover, .toc a.is-active { color: var(--text); border-left-color: var(--accent); }
+  .toc .mono { color: var(--muted); font-size: 0.75rem; padding-top: 3px; }
+  .prose { grid-column: 2; }
+  @media (max-width: 60rem) { .body { grid-template-columns: 1fr; } .toc { display: none; } .prose { grid-column: 1; } }
+
+  .gallery { padding-bottom: var(--s9); }
+  .gallery h2 { margin-bottom: var(--s5); font-weight: 400; }
+  .gallery ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: var(--s6) var(--s5); }
+  .gallery figure { margin: 0; display: grid; gap: var(--s3); }
+  .gallery__open { all: unset; cursor: zoom-in; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+  .gallery__open:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .gallery__open :global(img) { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s var(--ease); }
+  .gallery__open:hover :global(img) { opacity: 0.85; }
+  figcaption { font-size: 0.875rem; color: var(--muted); line-height: 1.5; }
+
+  .next { border-top: 1px solid var(--line); padding-block: var(--s8) var(--s9); }
+  .next a { display: grid; gap: var(--s3); text-decoration: none; }
+  .next__title { display: flex; align-items: center; gap: var(--s3); font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; font-stretch: 118%; letter-spacing: -0.02em; }
+  .next__title :global(.icon) { color: var(--accent); transition: transform 0.2s var(--ease); }
+  .next a:hover .next__title :global(.icon) { transform: translateX(var(--s2)); }
+
+  .lightbox { width: min(100vw - 2 * var(--s5), 90rem); max-height: calc(100vh - 2 * var(--s5)); padding: var(--s5); border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--bg); color: var(--text); }
+  .lightbox::backdrop { background: rgb(0 0 0 / 0.85); }
+  .lightbox[open] { animation: zoom 0.2s var(--ease); }
+  @keyframes zoom { from { opacity: 0; transform: scale(0.98); } }
+  .lightbox img { margin-inline: auto; max-height: calc(100vh - 12rem); width: auto; border-radius: var(--radius); }
+  .lightbox__caption { margin-top: var(--s4); color: var(--muted); font-size: 0.9375rem; text-align: center; }
+  .lightbox__close { position: absolute; top: var(--s3); right: var(--s3); padding: var(--s2); background: var(--bg); }
+</style>

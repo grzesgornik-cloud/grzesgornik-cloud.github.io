@@ -1,0 +1,68 @@
+# Builds and publishes the site on every change (including edits made in Pages CMS).
+# If the build or link check fails, the live site stays as it was and you get an issue + email.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+      - name: Check every internal link, image and the CV
+        run: node scripts/check-site.mjs dist
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  alert:
+    needs: [build, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open an issue so you get an email
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create site-health --color 3DAA78 --description "Automatic site alerts" 2>/dev/null || true
+          gh issue create --label site-health \
+            --title "Site update failed to publish" \
+            --body "Your latest change ($GITHUB_SHA) didn't go live. The site is still showing the previous version.
+
+          Most common causes: a project is missing a required field, a photo path is wrong, or a summary is over 220 characters.
+
+          The exact error is in the run log: $RUN"

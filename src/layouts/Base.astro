@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import profile from '../data/profile.json';
+
+interface Props { title?: string; description?: string; image?: string }
+const { title, description = `${profile.fullName}: mechanical design engineering portfolio. Formula Student chassis and structures, FEA, composites.`, image } = Astro.props;
+const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · Mechanical design engineer`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const built = new Date().toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#101113" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'Person', name: profile.fullName, alternateName: profile.name,
+      jobTitle: 'Mechanical engineering student', url: Astro.site?.toString(), sameAs: [profile.linkedin],
+      alumniOf: 'University College Dublin', address: { '@type': 'PostalAddress', addressLocality: 'Dublin', addressCountry: 'IE' },
+    })} />
+  </head>
+  <body>
+    <a class="skip btn" href="#main">Skip to content</a>
+    <header class="top">
+      <div class="wrap top__inner">
+        <a class="top__name" href="/" aria-label={`${profile.name}, home`}>
+          <span class="top__mark mono">GG</span>
+          <span>{profile.name}</span>
+        </a>
+        <nav aria-label="Main">
+          <ul>
+            <li><a href={path === '/' ? '#work' : '/#work'}>Work</a></li>
+            <li><a href={path === '/' ? '#skills' : '/#skills'}>Skills</a></li>
+            <li><a href={path === '/' ? '#about' : '/#about'}>About</a></li>
+            <li><a href={path === '/' ? '#contact' : '/#contact'}>Contact</a></li>
+            <li><a class="top__cv" href={profile.cv} download><Icon name="download" /> CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main"><slot /></main>
+
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <p class="mono">© {new Date().getFullYear()} {profile.fullName}</p>
+        <p class="mono foot__meta">Updated {built}</p>
+        <ul class="foot__links">
+          <li><a href={`mailto:${profile.email}`} aria-label="Email"><Icon name="mail" /></a></li>
+          <li><a href={profile.linkedin} aria-label="LinkedIn" rel="me noopener" target="_blank"><Icon name="brand-linkedin" /></a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <style>
+      .skip { position: absolute; left: var(--s4); top: -100px; z-index: 10; background: var(--bg); }
+      .skip:focus { top: var(--s4); }
+      .top { position: sticky; top: 0; z-index: 5; background: rgb(16 17 19 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+      .top__inner { display: flex; justify-content: space-between; align-items: center; height: var(--s8); }
+      .top__name { display: flex; align-items: center; gap: var(--s3); text-decoration: none; font-weight: 600; font-stretch: 110%; }
+      .top__mark { display: grid; place-items: center; width: var(--s6); height: var(--s6); border: 1px solid var(--line-strong); border-radius: var(--radius); font-size: 0.6875rem; font-weight: 600; }
+      nav ul { display: flex; align-items: center; gap: var(--s5); list-style: none; margin: 0; padding: 0; }
+      nav a { font-family: var(--mono); font-size: 0.8125rem; text-decoration: none; color: var(--muted); transition: color 0.15s var(--ease); }
+      nav a:hover { color: var(--text); }
+      .top__cv { display: inline-flex; align-items: center; gap: var(--s1); color: var(--accent) !important; }
+      @media (max-width: 40rem) {
+        nav li:not(:last-child) { display: none; }
+      }
+      .foot { border-top: 1px solid var(--line); padding-block: var(--s7); color: var(--muted); }
+      .foot__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s5); }
+      .foot__meta { margin-right: auto; }
+      .foot__links { display: flex; gap: var(--s4); list-style: none; margin: 0; padding: 0; }
+      .foot__links a { display: inline-flex; color: var(--muted); }
+      .foot__links a:hover { color: var(--text); }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getProjects } from '../data/projects';
+const projects = await getProjects();
+---
+<Base title="Page not found">
+  <section class="wrap nf" aria-labelledby="nf-title">
+    <div class="msg" role="status">
+      <p class="label msg__head"><span>Race control</span><span>Message 404</span></p>
+      <p class="msg__body mono">Car GG · Turn 404 · Track limits<br /><span class="accent">Lap time deleted</span></p>
+    </div>
+
+    <h1 id="nf-title">Off the circuit.</h1>
+    <p class="nf__lead">There's no page at <code class="mono" id="nf-path">this address</code>. It may have been mistyped, or the project has moved.</p>
+
+    <div class="nf__actions">
+      <a class="btn btn--primary" href="/"><Icon name="arrow-left" /> Back to the pit lane</a>
+      <a class="btn" href="/#work">See all work</a>
+    </div>
+
+    {projects.length > 0 && (
+      <div class="nf__list">
+        <p class="label">Projects</p>
+        <ul>
+          {projects.map((p) => <li><a href={`/projects/${p.id}/`}>{p.data.title} <Icon name="arrow-right" /></a></li>)}
+        </ul>
+      </div>
+    )}
+  </section>
+</Base>
+
+<script>
+  const el = document.getElementById('nf-path');
+  if (el) el.textContent = window.location.pathname;
+</script>
+
+<style>
+  .nf { padding-block: var(--s9) var(--s10); max-width: 48rem; margin-left: max(var(--s5), calc((100% - var(--page)) / 2)); }
+  .msg { border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); margin-bottom: var(--s8); }
+  .msg__head { display: flex; justify-content: space-between; padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); }
+  .msg__body { padding: var(--s5) var(--s4); font-size: clamp(1rem, 2.4vw, 1.375rem); line-height: 1.6; text-transform: uppercase; letter-spacing: 0.04em; }
+  h1 { font-size: clamp(2.75rem, 8vw, 5.5rem); font-stretch: 122%; font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; margin-bottom: var(--s5); }
+  .nf__lead { color: var(--muted); font-size: 1.125rem; margin-bottom: var(--s6); }
+  .nf__lead code { color: var(--text); overflow-wrap: anywhere; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: var(--s3); }
+  .nf__list { margin-top: var(--s8); }
+  .nf__list ul { list-style: none; margin: var(--s4) 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .nf__list a { display: flex; justify-content: space-between; align-items: center; padding-block: var(--s4); border-bottom: 1px solid var(--line); text-decoration: none; font-size: 1.125rem; }
+  .nf__list a:hover { color: var(--accent); }
+</style>

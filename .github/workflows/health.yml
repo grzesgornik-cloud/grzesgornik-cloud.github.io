@@ -1,0 +1,54 @@
+# Checks the live site every 6 hours and after each deploy.
+# Problem found  -> opens (or updates) one "Site health" issue, which emails you.
+# All clear again -> closes that issue automatically.
+name: Health check
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_run:
+    workflows: [Deploy]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      SITE: ${{ vars.SITE_URL || 'https://grzesgornik-cloud.github.io' }}
+      SITE_URL: ${{ vars.SITE_URL }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci && npm run build
+      - name: Wait for a fresh deploy to settle
+        if: github.event_name == 'workflow_run'
+        run: sleep 60
+      - name: Check the live site
+        id: live
+        continue-on-error: true
+        run: node scripts/check-site.mjs live "$SITE" | tee report.txt
+      - name: Check external links
+        id: links
+        continue-on-error: true
+        run: node scripts/check-site.mjs dist | tee -a report.txt
+      - name: Report
+        run: |
+          gh label create site-health --color 3DAA78 --description "Automatic site alerts" 2>/dev/null || true
+          OPEN=$(gh issue list --label site-health --state open --search "Site health" --json number --jq '.[0].number')
+          if [ "${{ steps.live.outcome }}" = "failure" ] || [ "${{ steps.links.outcome }}" = "failure" ]; then
+            BODY="$(printf 'Checked %s at %s UTC.\n\n```\n%s\n```\n\nRun log: %s' "$SITE" "$(date -u '+%d %b %H:%M')" "$(cat report.txt)" "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID")"
+            if [ -n "$OPEN" ]; then gh issue comment "$OPEN" --body "$BODY"; else gh issue create --label site-health --title "Site health: problem found" --body "$BODY"; fi
+            exit 1
+          elif [ -n "$OPEN" ]; then
+            gh issue close "$OPEN" --comment "All checks are passing again."
+          fi

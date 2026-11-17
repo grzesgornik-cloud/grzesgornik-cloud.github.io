@@ -1,0 +1,165 @@
+# Pages CMS: edit this site from a browser at https://app.pagescms.org
+# Sign in with GitHub, pick this repository, and edit Projects or Profile.
+# Every save is a commit; the site rebuilds and goes live in about two minutes.
+
+media:
+  input: src/assets/projects
+  output: /projects
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: '{primary}.md'
+    view:
+      fields: [title, stage, year, draft]
+      primary: title
+      sort: [order, title]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: summary
+        label: One-line summary
+        description: Shown on the home page card. Under 220 characters.
+        type: text
+        required: true
+      - name: team
+        label: Team or context
+        description: e.g. UCD Formula Student, Personal project, Placement at Mercury
+        type: string
+        required: true
+      - name: year
+        label: Year
+        type: string
+        required: true
+      - name: role
+        label: Your role
+        type: string
+        required: true
+      - name: tools
+        label: Tools and processes
+        type: string
+        list: true
+      - name: stage
+        label: Stage
+        description: Drives the progress bar. Pick Complete when it's done.
+        type: select
+        required: true
+        options:
+          values: [Concept, Design, Analysis, Manufacture, Testing, Complete]
+      - name: cover
+        label: Cover photo
+        description: Used on the home page card and at the top of the project page.
+        type: image
+      - name: coverAlt
+        label: Cover photo description
+        description: What the photo shows, for screen readers.
+        type: string
+      - name: metrics
+        label: Key numbers (max 3)
+        type: object
+        list: { max: 3 }
+        fields:
+          - name: value
+            label: Number
+            description: e.g. −8 kg, +68%, 1.95
+            type: string
+          - name: label
+            label: What it means
+            type: string
+      - name: gallery
+        label: Gallery
+        type: object
+        list: true
+        fields:
+          - name: image
+            label: Photo
+            type: image
+          - name: alt
+            label: Description
+            type: string
+          - name: caption
+            label: Caption
+            type: string
+      - name: order
+        label: Order on home page
+        description: Lower numbers appear first.
+        type: number
+      - name: draft
+        label: Draft
+        description: Drafts don't appear on the live site.
+        type: boolean
+      - name: body
+        label: Write-up
+        description: Use headings like The brief, What I did, Proving it, Result.
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: profile
+    label: Profile and contact
+    type: file
+    path: src/data/profile.json
+    format: json
+    fields:
+      - { name: name, label: Name shown, type: string }
+      - { name: fullName, label: Full name, type: string }
+      - { name: role, label: Role line, type: string }
+      - { name: location, label: Location, type: string }
+      - { name: intro, label: Intro paragraph, type: text }
+      - { name: availability, label: What you're looking for, type: string }
+      - { name: email, label: Email, type: string }
+      - { name: phone, label: Phone, description: Leave empty to keep it off the site., type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - { name: cv, label: CV link, description: Upload a new PDF to public/cv/ with the same name to replace it., type: string }
+      - name: timing
+        label: Timing strip (3 numbers)
+        type: object
+        list: { min: 3, max: 3 }
+        fields:
+          - { name: sector, label: Sector, type: string }
+          - { name: label, label: Label, type: string }
+          - { name: value, label: Number, type: string }
+          - { name: unit, label: Unit, type: string }
+          - { name: note, label: Note, type: string }
+      - { name: about, label: About paragraphs, type: text, list: true }
+      - name: experience
+        label: Experience
+        type: object
+        list: true
+        fields:
+          - { name: role, label: Role, type: string }
+          - { name: org, label: Organisation, type: string }
+          - { name: dates, label: Dates, type: string }
+      - name: skills
+        label: Technical skills
+        type: object
+        list: true
+        fields:
+          - { name: group, label: Group, type: string }
+          - name: items
+            label: Items
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Skill or software, type: string }
+              - { name: detail, label: Where you used it, type: string }
+      - name: strengths
+        label: How I work (soft skills with evidence)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Strength, type: string }
+          - { name: evidence, label: Evidence, type: text }
+      - name: education
+        label: Education
+        type: object
+        fields:
+          - { name: school, label: School, type: string }
+          - { name: course, label: Course, type: string }
+          - { name: dates, label: Dates, type: string }
+          - { name: detail, label: Detail, type: string }
+      - { name: languages, label: Languages, type: string }
