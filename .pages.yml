@@ -109,6 +109,7 @@ content:
       - { name: fullName, label: Full name, type: string }
       - { name: role, label: Role line, type: string }
       - { name: location, label: Location, type: string }
+      - { name: headline, label: Headline under your name, type: string }
       - { name: intro, label: Intro paragraph, type: text }
       - { name: availability, label: What you're looking for, type: string }
       - { name: email, label: Email, type: string }

@@ -15,7 +15,7 @@ const tel = profile.phone?.replace(/\s/g, '');
   <section class="hero wrap" aria-labelledby="hero-title">
     <p class="label">{profile.fullName} <span aria-hidden="true">·</span> {profile.role} <span aria-hidden="true">·</span> {profile.location}</p>
     <h1 id="hero-title">{profile.name}</h1>
-    <p class="hero__line">Chassis and structures for Formula Student. Heading for design engineering in Formula 1.</p>
+    <p class="hero__line">{profile.headline}</p>
     <p class="hero__intro">{profile.intro}</p>
     <p class="hero__status"><span class="hero__dot" aria-hidden="true"></span>{profile.availability}</p>
     <div class="hero__actions">
