@@ -1,0 +1,4 @@
+# Pages carry a noindex tag, so crawlers may read them but won't list them.
+# The CV PDF can't carry that tag, so crawlers are kept away from it here.
+User-agent: *
+Disallow: /cv/

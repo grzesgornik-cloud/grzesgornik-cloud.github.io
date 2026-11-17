@@ -35,6 +35,10 @@ Contact details, the timing strip numbers and the About section live in `src/dat
 Make sure **Settings → Notifications → Email** is on in GitHub and you're watching this repository (you are by default).
 GitHub pauses scheduled checks after 60 days without commits. Any edit restarts them.
 
+## Search engines
+
+The site is deliberately kept out of search results: every page has `<meta name="robots" content="noindex">` (in `src/layouts/Base.astro`) and `public/robots.txt` keeps crawlers away from the CV. Anyone with the link can still visit. To be findable on Google, delete that meta line and the `Disallow` line.
+
 ## Moving to greg-gornik.ie
 
 1. Buy greg-gornik.ie from an Irish registrar.
