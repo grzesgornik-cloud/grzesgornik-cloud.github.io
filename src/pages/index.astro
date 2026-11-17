@@ -5,6 +5,8 @@ import TimingStrip from '../components/TimingStrip.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import profile from '../data/profile.json';
 import { getProjects } from '../data/projects';
+import { Image } from 'astro:assets';
+import teamPhoto from '../assets/team-silverstone-2026.jpg';
 
 const projects = await getProjects();
 const tel = profile.phone?.replace(/\s/g, '');
@@ -70,6 +72,10 @@ const tel = profile.phone?.replace(/\s/g, '');
   </section>
 
   <section id="about" class="section" aria-labelledby="about-title">
+    <figure class="wrap team">
+      <Image src={teamPhoto} alt="The UCD Formula Student team in green team shirts, cheering around car 135 and an Irish flag in front of the pit garages at Silverstone" widths={[800, 1400, 2200]} sizes="(max-width: 72rem) 100vw, 72rem" />
+      <figcaption class="mono">UCD Formula Student at Formula Student UK, Silverstone, 2026</figcaption>
+    </figure>
     <div class="wrap split">
       <h2 id="about-title">About</h2>
       <div class="about">
@@ -175,6 +181,9 @@ const tel = profile.phone?.replace(/\s/g, '');
   .contact__copy { padding: var(--s2); }
   .contact__copy.is-copied { border-color: var(--accent); color: var(--accent); }
   @media (max-width: 40rem) { .contact li { grid-template-columns: auto 1fr auto; } .contact .label { display: none; } .contact li { font-size: 1rem; min-height: var(--s8); } }
+  .team { margin: 0 auto var(--s8); }
+  .team :global(img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 45%; border-radius: var(--radius); border: 1px solid var(--line); }
+  .team figcaption { color: var(--muted); margin-top: var(--s3); }
   .side-lead { color: var(--muted); margin-top: var(--s5); max-width: 22rem; }
   .tech { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--s6) var(--s6); }
   .tech__name { color: var(--accent); margin-bottom: var(--s3); }
