@@ -149,12 +149,12 @@ content:
               - { name: name, label: Skill or software, type: string }
               - { name: detail, label: Where you used it, type: string }
       - name: strengths
-        label: How I work (soft skills with evidence)
+        label: Beyond CAD (roles outside design work)
         type: object
         list: true
         fields:
-          - { name: title, label: Strength, type: string }
-          - { name: evidence, label: Evidence, type: text }
+          - { name: title, label: Role, type: string }
+          - { name: evidence, label: What you do, type: text }
       - name: education
         label: Education
         type: object

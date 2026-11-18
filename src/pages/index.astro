@@ -44,7 +44,7 @@ const tel = profile.phone?.replace(/\s/g, '');
     <div class="wrap split">
       <div>
         <h2 id="skills-title">Skills</h2>
-        <p class="side-lead">Software and methods, with where I've used them. The people side is shown through roles rather than adjectives.</p>
+        <p class="side-lead">The software I use, the methods behind it, and where I've put them to work.</p>
       </div>
       <div class="about">
         <div class="block">
@@ -61,7 +61,7 @@ const tel = profile.phone?.replace(/\s/g, '');
           </div>
         </div>
         <div class="block">
-          <h3 class="label">How I work</h3>
+          <h3 class="label">Beyond CAD</h3>
           <ul class="strengths">
             {profile.strengths.map((st) => <li><p class="strengths__title">{st.title}</p><p class="strengths__ev">{st.evidence}</p></li>)}
           </ul>
@@ -161,9 +161,10 @@ const tel = profile.phone?.replace(/\s/g, '');
   .about { display: grid; gap: var(--s8); }
   .about__text { display: grid; gap: var(--s4); max-width: 40rem; font-size: 1.125rem; }
   .about__text p:not(:first-child) { color: var(--muted); }
+  .about__text p:first-child { font-size: 1.25rem; line-height: 1.5; color: var(--text); }
   .block h3 { margin-bottom: var(--s4); font-weight: 400; }
   .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-  .rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) auto; gap: var(--s4); align-items: baseline; padding-block: var(--s4); border-bottom: 1px solid var(--line); }
+  .rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) 8.5rem; gap: var(--s4); align-items: baseline; padding-block: var(--s4); border-bottom: 1px solid var(--line); }
   .rows__main { font-weight: 500; }
   .rows__sub { color: var(--muted); }
   .rows__end { color: var(--muted); text-align: right; white-space: nowrap; }

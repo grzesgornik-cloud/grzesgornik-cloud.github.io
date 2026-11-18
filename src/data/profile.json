@@ -32,8 +32,9 @@
     }
   ],
   "about": [
-    "I'm in third year of the five-year BE/ME in Mechanical Engineering at University College Dublin. Most of my time outside lectures goes into UCD Formula Student, where I work on the team's first full chassis redesign and run the workshop.",
-    "Before engineering, I spent three and a half years in a bike shop's workshop. Watching parts come back broken taught me that a component nobody can service or trust isn't finished, however light it is. I design with that in mind."
+    "I'm a third-year Mechanical Engineering student at UCD with one ambition: to design and build high-performance components for motorsport.",
+    "That drive comes from my time on UCD Formula Student. I'm on the chassis team, and I've been heavily involved in our first full chassis redesign, including the framework we now use to set torsional stiffness targets from the suspension. Before that, I designed and optimised suspension mounts and worked with the powertrain team on the mechanical design of our 2026 accumulator. Formula Student has shown me what it's like to work under real constraints, designing for weight, cost, packaging, manufacturability and a strict timeline. I can't wait to keep learning and help build an even better 2027 car.",
+    "I'm currently looking for internships, or just advice from people already working in motorsport design, so feel free to get in touch."
   ],
   "experience": [
     {
@@ -115,6 +116,10 @@
         {
           "name": "Design for manufacture",
           "detail": ""
+        },
+        {
+          "name": "Mechanics of materials and dynamics",
+          "detail": "UCD coursework"
         }
       ]
     },
@@ -145,20 +150,20 @@
   "languages": "English and Polish (fluent)",
   "strengths": [
     {
-      "title": "Calm under race pressure",
-      "evidence": "Team mechanic for UCD Cycling at national races, fixing bikes from the team car mid-stage."
+      "title": "Team mechanic, UCD Cycling",
+      "evidence": "I travel with the team to all the major national races, maintaining the bikes and equipment and supporting the riders from the team car during stages. It's given me a practical understanding of how parts fail, what makes them serviceable, and why reliability matters as much as performance."
     },
     {
-      "title": "Keeps a shared workshop running",
-      "evidence": "Workshop Manager for UCD Formula Student: tools tracked, software maintained, space kept safe."
+      "title": "Mountain Bike Officer, UCD Cycling",
+      "evidence": "I've organised a lot of social spins for the club, which has taught me a lot about the difficulties and opportunities that come with managing people."
     },
     {
-      "title": "Works across disciplines",
-      "evidence": "Designed the TSAC's mechanical layout around the electrical team's cells and BMS."
+      "title": "Workshop Manager, UCD Formula Student",
+      "evidence": "I keep the team's workshop organised and safe, with every tool tracked and maintained, and look after our workstations and software, including Ansys, OptimumK and IPG CarMaker."
     },
     {
-      "title": "Represents other people",
-      "evidence": "Third-year rep for the Mechanical Engineering Society, between staff and students."
+      "title": "3rd Year Rep, Mechanical Engineering Society",
+      "evidence": "I'm the link between the faculty, the society and the students in my year, which has made me a better communicator and team player."
     }
   ]
 }
