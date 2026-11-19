@@ -19,7 +19,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      SITE: ${{ vars.SITE_URL || 'https://grzesgornik-cloud.github.io' }}
+      # Starts from the old github.io address on purpose: it must redirect to greg-gornik.ie,
+      # so one check covers the redirect, the custom domain and its HTTPS certificate.
+      SITE: https://grzesgornik-cloud.github.io
       SITE_URL: ${{ vars.SITE_URL }}
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}

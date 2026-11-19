@@ -39,15 +39,13 @@ GitHub pauses scheduled checks after 60 days without commits. Any edit restarts 
 
 The site is deliberately kept out of search results: every page has `<meta name="robots" content="noindex">` (in `src/layouts/Base.astro`) and `public/robots.txt` keeps crawlers away from the CV. Anyone with the link can still visit. To be findable on Google, delete that meta line and the `Disallow` line.
 
-## Moving to greg-gornik.ie
+## Domain
 
-1. Buy greg-gornik.ie from an Irish registrar.
-2. In the registrar's DNS settings add four `A` records for `@` pointing to
-   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`,
-   and a `CNAME` record for `www` pointing to `grzesgornik-cloud.github.io`.
-3. In this repo: Settings → Pages → Custom domain → `greg-gornik.ie` → Save, then tick Enforce HTTPS once it's offered.
-4. Settings → Secrets and variables → Actions → Variables → New variable `SITE_URL` = `https://greg-gornik.ie`.
-5. Actions → Deploy → Run workflow.
+The site lives at **https://greg-gornik.ie**.
+
+- Registered with register.ie (HostPapa), renews every November. DNS is on Cloudflare (free plan): four `A` records for `@` to GitHub's `185.199.108-111.153` and a `CNAME` for `www` to `grzesgornik-cloud.github.io`, all set to **DNS only** (grey cloud).
+- GitHub: Settings → Pages → Custom domain = `greg-gornik.ie`, Enforce HTTPS on.
+- The old `grzesgornik-cloud.github.io` address redirects to the domain; the health check starts there so it tests the redirect, the domain and HTTPS in one go.
 
 ## Running it locally
 
