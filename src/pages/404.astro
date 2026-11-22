@@ -11,12 +11,12 @@ const projects = await getProjects();
       <p class="msg__body mono">Car GG · Turn 404 · Track limits<br /><span class="accent">Lap time deleted</span></p>
     </div>
 
-    <h1 id="nf-title">Off the circuit.</h1>
-    <p class="nf__lead">There's no page at <code class="mono" id="nf-path">this address</code>. It may have been mistyped, or the project has moved.</p>
+    <h1 id="nf-title">Page not found</h1>
+    <p class="nf__lead">Looks like this one went off at Turn 404. There's nothing at <code class="mono" id="nf-path">this address</code>, so the link might be wrong, or I've moved the page.</p>
 
     <div class="nf__actions">
-      <a class="btn btn--primary" href="/"><Icon name="arrow-left" /> Back to the pit lane</a>
-      <a class="btn" href="/#work">See all work</a>
+      <a class="btn btn--primary" href="/"><Icon name="arrow-left" /> Back to the home page</a>
+      <a class="btn" href="/#work">See my projects</a>
     </div>
 
     {projects.length > 0 && (

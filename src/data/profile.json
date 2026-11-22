@@ -4,7 +4,7 @@
   "role": "Mechanical engineering student, UCD",
   "location": "Dublin, Ireland",
   "headline": "Mechanical engineering student at UCD, aiming for design engineering in Formula 1.",
-  "intro": "I like owning the whole loop: setting the target, designing it in CAD, proving it in FEA and getting my hands on the build. On UCD Formula Student, I set the chassis stiffness target and helped redesign the car's battery container. Away from the car, I'm building a live F1 strategy display, and I've spent years in workshops keeping bikes on the road.",
+  "intro": "I enjoy being involved in a part from start to finish: setting the target, designing it in CAD, checking it in FEA and helping to build it. On UCD Formula Student I worked out the stiffness target for our new chassis and helped redesign the battery container. Away from the car I'm building a live F1 strategy display, and I've spent a good few years working in bike workshops.",
   "availability": "Looking for a mechanical design internship in motorsport, summer 2027",
   "email": "grzesgornik@gmail.com",
   "phone": "",
@@ -12,23 +12,20 @@
   "cv": "/cv/Grzegorz_Gornik_CV.pdf",
   "timing": [
     {
-      "sector": "S1",
       "label": "2027 chassis",
       "value": "+68%",
       "note": "torsional stiffness at the same frame mass"
     },
     {
-      "sector": "S2",
-      "label": "2026 TSAC",
+      "label": "2026 accumulator",
       "value": "−8 kg",
-      "note": "steel to aluminium, proven in FEA"
+      "note": "after moving from steel to aluminium"
     },
     {
-      "sector": "S3",
       "label": "Chassis stiffness",
       "value": "1,980",
       "unit": "Nm/°",
-      "note": "13% above the 1,750 target I set"
+      "note": "against a 1,750 Nm/° target"
     }
   ],
   "about": [
@@ -36,6 +33,14 @@
     "That drive comes from my time on UCD Formula Student. I'm on the chassis team, and I've been heavily involved in our first full chassis redesign, including the framework we now use to set torsional stiffness targets from the suspension. Before that, I designed and optimised suspension mounts and worked with the powertrain team on the mechanical design of our 2026 accumulator. Formula Student has shown me what it's like to work under real constraints, designing for weight, cost, packaging, manufacturability and a strict timeline. I can't wait to keep learning and help build an even better 2027 car.",
     "I'm currently looking for internships, or just advice from people already working in motorsport design, so feel free to get in touch."
   ],
+  "now": {
+    "updated": "November 2026",
+    "items": [
+      "Finishing the chassis analysis so it can be released for manufacture",
+      "Working out pit loss and rejoin windows for the Circle of Doom",
+      "Running the Formula Student workshop"
+    ]
+  },
   "experience": [
     {
       "role": "Workshop Manager",
@@ -155,15 +160,15 @@
     },
     {
       "title": "Workshop Administrator, Cycle SuperStore",
-      "evidence": "I spent three and a half years in the shop, starting in sales and then running the workshop admin, coordinating repairs between customers and our mechanics. That meant explaining technical problems in plain terms, managing expectations and keeping both sides happy. Seeing what came back through the workshop gave me a practical understanding of how parts fail, what makes them serviceable, and why reliability matters as much as performance."
+      "evidence": "I spent three and a half years in the shop, first in sales and then running the workshop admin. Most of that job was sorting out repairs between customers and our mechanics, which meant a lot of explaining what was wrong with someone's bike and how long it would take. Seeing what came back through the workshop also taught me how parts fail, what makes them easy to service, and why reliability matters as much as performance."
     },
     {
       "title": "Workshop Manager, UCD Formula Student",
-      "evidence": "I keep the team's workshop organised and safe, with every tool tracked and maintained, and look after our workstations and software, including Ansys, OptimumK and IPG CarMaker."
+      "evidence": "I keep the team's workshop organised and safe, make sure tools are tracked and looked after, and keep our workstations and software running, including Ansys, OptimumK and IPG CarMaker."
     },
     {
       "title": "3rd Year Rep, Mechanical Engineering Society",
-      "evidence": "I'm the link between the faculty, the society and the students in my year, which has made me a better communicator and team player."
+      "evidence": "I'm the link between the faculty, the society and the students in my year. It's helped my communication and teamwork a lot."
     }
   ]
 }

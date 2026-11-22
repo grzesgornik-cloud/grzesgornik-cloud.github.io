@@ -47,7 +47,7 @@ const large = await Promise.all(p.gallery.map((g) => getImage({ src: img(g.image
 
     {p.metrics.length > 0 && (
       <div class="wrap metrics">
-        <TimingStrip size="md" cells={p.metrics.map((m, i) => ({ sector: `0${i + 1}`, label: 'Result', value: m.value, note: m.label }))} />
+        <TimingStrip size="md" cells={p.metrics.map((m) => ({ value: m.value, note: m.label }))} />
       </div>
     )}
 

@@ -1,13 +1,13 @@
 ---
-// Results shown like sectors on a timing screen. Green = personal best.
-interface Cell { sector?: string; label: string; value: string; unit?: string; note: string }
+// Key numbers, styled loosely on a timing screen (green = personal best).
+interface Cell { label?: string; value: string; unit?: string; note: string }
 interface Props { cells: Cell[]; size?: 'lg' | 'md' }
 const { cells, size = 'lg' } = Astro.props;
 ---
 <dl class={`timing timing--${size}`} style={`--n:${cells.length}`}>
-  {cells.map((c, i) => (
+  {cells.map((c) => (
     <div class="timing__cell">
-      <dt class="label">{c.sector ?? `S${i + 1}`} <span aria-hidden="true">·</span> {c.label}</dt>
+      {c.label ? <dt class="label">{c.label}</dt> : <dt class="sr-only">{c.note}</dt>}
       <dd>
         <span class="timing__value">{c.value}{c.unit && <span class="timing__unit">{c.unit}</span>}</span>
         <span class="timing__note">{c.note}</span>

@@ -121,12 +121,17 @@ content:
         type: object
         list: { min: 3, max: 3 }
         fields:
-          - { name: sector, label: Sector, type: string }
           - { name: label, label: Label, type: string }
           - { name: value, label: Number, type: string }
           - { name: unit, label: Unit, type: string }
           - { name: note, label: Note, type: string }
       - { name: about, label: About paragraphs, type: text, list: true }
+      - name: now
+        label: Right now (short list beside About)
+        type: object
+        fields:
+          - { name: updated, label: Month, description: e.g. November 2026, type: string }
+          - { name: items, label: What you're working on, type: string, list: true }
       - name: experience
         label: Experience
         type: object
@@ -149,7 +154,7 @@ content:
               - { name: name, label: Skill or software, type: string }
               - { name: detail, label: Where you used it, type: string }
       - name: strengths
-        label: Beyond CAD (roles outside design work)
+        label: Other roles
         type: object
         list: true
         fields:

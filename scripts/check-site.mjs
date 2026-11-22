@@ -52,7 +52,7 @@ if (mode === 'dist') {
     } catch (e) { problems.push(`${url} is unreachable (${e.message})`); }
   }
   const missing = await fetch(new URL('/health-check-missing-page', base), { signal: AbortSignal.timeout(20000) }).catch(() => null);
-  if (!missing || missing.status !== 404 || !(await missing.text()).includes('Off the circuit')) problems.push('The custom 404 page is not being served');
+  if (!missing || missing.status !== 404 || !(await missing.text()).includes('went off at Turn 404')) problems.push('The custom 404 page is not being served');
 }
 
 if (problems.length) {
