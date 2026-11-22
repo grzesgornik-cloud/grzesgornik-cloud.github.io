@@ -19,7 +19,7 @@ metrics:
     label: agreement on laps down
   - value: '100'
     label: automated tests passing
-order: 3
+order: 4
 draft: false
 ---
 
