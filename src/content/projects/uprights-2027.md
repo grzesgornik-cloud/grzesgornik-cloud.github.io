@@ -42,7 +42,7 @@ The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted i
 
 The wheels are also going from 13 inch to 10 inch for 2027, and fitting everything inside the smaller wheel was a huge challenge. There's very little clearance to the rim once you fit 80 mm bearings, two brackets and enough material around them.
 
-That's also what decided the material. We started the 2027 knuckle in 6061, the same as last year, and it failed. 6068 failed too. A 6000 series knuckle could have worked with extra material, but then it wouldn't have cleared the wheel. So we went to 7075, which is much stronger and let us keep the part the size it needed to be.
+That's also what decided the material. We started the 2027 knuckle in 6061, the same as last year, and it failed in simulation. 6082 failed too. A 6000 series knuckle could have worked with extra material, but then it wouldn't have cleared the wheel. So we went to 7075, which is much stronger and let us keep the part the size it needed to be.
 
 The suspension team and I worked on them together. My main job was the simulation, and I helped with the redesign when the results showed the first version wasn't strong enough.
 
@@ -92,7 +92,36 @@ The two models put the weak spot in different places because they pass the load 
 
 With real bolts and friction, the load goes through the clamped area around each bolt instead. The preload already squeezes the material there before any load is applied, and that's where the contact pressure peaks, at 172 MPa. So the stress concentrates around the holes, and that becomes the critical spot.
 
-Neither model is wrong. They answer different questions. The linear one is fast enough to run every load case and find the worst one. The nonlinear one takes much longer, but it's the only way to check that the joints hold and to set the torque spec and bolt grade. We used the nonlinear results to pick both.
+Neither model is wrong. They answer different questions. The linear one is fast enough to run every load case and find the worst one. The nonlinear one takes much longer, but it's the only way to check that the joints hold and to set the torque spec and bolt grade. We used the nonlinear results to pick both: M8 12.9 bolts at 36 N·m dry (27 N·m oiled), with hardened washers under the heads and nuts.
+
+### Checking the top bracket by hand
+
+I didn't want to trust the nonlinear model without a quick hand check on whether the top bracket should slip. A bolted joint holds by friction, so the most shear it can carry before it slips is the clamp force times the friction coefficient:
+
+```text
+F_slip = μ · n · F_preload
+```
+
+At 36 N·m an M8 12.9 bolt should give about 22.8 kN of preload. Torque is a rough way to set preload, though, and it can be 25% out either way, so I used the low end, 17.1 kN, which is the worst case for slip. That's the same value I used in Ansys. With two bolts and μ = 0.15 for dry aluminium on aluminium:
+
+```text
+F_slip = 0.15 × 2 × 17.1 kN = 5.1 kN
+```
+
+In Brake + Corner, the upper pickup puts 2.15 kN through the top bracket. That gives a margin of about 2.4 against slip, and still about 1.6 if the friction drops to μ = 0.1. I treated the whole force as shear, which overestimates the shear on the joint, so the real margin is a bit higher.
+
+The bolts and the knuckle also have to survive the top end of the scatter, 28.5 kN:
+
+```text
+Bolt stress    = 28.5 kN / 36.6 mm² = 779 MPa
+Washer bearing = 28.5 kN / 146 mm²  = 195 MPa
+```
+
+That's 71% of the bolt's 1,100 MPa yield, and well under the roughly 460 MPa yield of 7075.
+
+Without a washer, a bare socket head would press about 370 MPa into the aluminium, which is too close to yield. That's why the washers are hardened.
+
+The hand calculation agrees with the nonlinear result that the top bracket sticks. What it can't capture is the moment from the pickup sitting out from the joint, which tries to peel the bracket off at one edge. That shows up in Ansys as the ring of "near" contact around the edges, and it's why I still needed the nonlinear model.
 
 ## What the results changed
 
