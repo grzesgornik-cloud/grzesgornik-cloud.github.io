@@ -87,7 +87,14 @@ I checked the design with a beam model in Ansys, with the suspension geometry mo
 
 ![Ansys beam model of the chassis with a flexible rotation probe on the front suspension mounting points](/projects/chassis-2027/torsion-probe.png)
 
-The current design comes out at 1,980 Nm/°, which is 13% over the target and 68% stiffer than the previous chassis. Per kilogram of bare frame, that's about 43 Nm/° against roughly 26 for last year's, using the estimate from the chart above.
+The load was 1,500 N up on one side and 1,500 N down on the other, each 0.5075 m from the centreline, so the twist came out at about 0.77°:
+
+```text
+T = 2 × 1,500 N × 0.5075 m = 1,522.5 Nm
+K = T / θ = 1,522.5 Nm / 0.769° ≈ 1,980 Nm/°
+```
+
+That puts the current design 13% over the target and 68% stiffer than the previous chassis. Per kilogram of bare frame, that's about 43 Nm/° against roughly 26 for last year's, using the estimate from the chart above.
 
 ![Ansys total deformation plot of the chassis under torsion, largest at the front bulkhead and zero at the rear](/projects/chassis-2027/torsion-deformation.png)
 
