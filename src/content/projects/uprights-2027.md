@@ -48,7 +48,7 @@ The suspension team and I worked on them together. My main job was the simulatio
 
 ## Where the loads come from
 
-We generated the load cases in OptimumK for the different situations the suspension will see: maximum cornering, braking while cornering, maximum braking and a 3g bump. Each one gives the forces at the upper and lower ball joints and at the steering pickup. In Ansys I applied those through remote points at the joints, so the load goes into the part the way it would on the car, and held the knuckle at the bearing bore.
+We generated the load cases in OptimumK for the different situations the suspension will see: maximum cornering, maximum braking, maximum acceleration, braking while cornering (for both the outside and the inside wheel), a kerb strike and a 3g bump. Each one gives the forces at the upper and lower ball joints and at the steering pickup. In Ansys I applied those through remote points at the joints, so the load goes into the part the way it would on the car, and held the knuckle at the bearing bore.
 
 Here's the setup for Brake + Corner. The lower pickup takes the most, at about 4.2 kN, with roughly 2.1 kN at the upper pickup and 2.2 kN at the steering arm. The 515 N·m of brake torque goes in through the caliper mounts, and the bearing bore is held fixed:
 
@@ -62,7 +62,21 @@ I simulated the knuckle in two different ways, and they don't give quite the sam
 
 The first pass was a linear static analysis of every load case. In a linear model the brackets are bonded to the knuckle, as if they were glued on, so nothing can slide or separate. That makes it quick to solve and easy to compare cases, which is exactly what you want when you're looking for the worst one.
 
-Brake + Corner came out worst, with a minimum safety factor of 2.32. The weak spot was the fillet where the steering arm joins the body of the knuckle.
+These are the results for the final design. Loads are in kN, and the minimum safety factor is against yield:
+
+| Load case | Weak spot | Upper | Lower | Steering | Min SF |
+|---|---|---|---|---|---|
+| Brake + Corner (outside) | Steering arm fillet | 2.15 | 4.16 | 2.23 | 2.32 |
+| Max Brake | Lower pickup clevis | – | – | – | 2.54 |
+| Kerb Strike | Top bracket, by the bolt holes | 2.13 | 3.15 | 0.24 | 3.03 |
+| Max Corner (outside) | Below the top bracket | 1.56 | 3.48 | 0.33 | 3.80 |
+| Brake + Corner (inside) | Lower pickup clevis | 0.81 | 2.01 | 0.38 | 7.20 |
+| 3g Bump | – | 2.65 | 1.04 | 0.27 | – |
+| Max Accel | None | 0.09 | 0.03 | 0.01 | over 15 |
+
+Under acceleration the weight moves to the rear, so the front knuckle hardly sees any load. The braking cases are the ones that matter, because the brake torque (515 N·m on the outside wheel) goes through the knuckle as well.
+
+Brake + Corner on the outside wheel came out worst, with a minimum safety factor of 2.32. The weak spot was the fillet where the steering arm joins the body of the knuckle.
 
 ![Ansys safety factor plot for the Brake + Corner case, mostly blue, with a minimum of 2.32 at the root of the steering arm](/projects/uprights-2027/linear-brake-corner-sf.png)
 
@@ -94,9 +108,9 @@ With real bolts and friction, the load goes through the clamped area around each
 
 Neither model is wrong. They answer different questions. The linear one is fast enough to run every load case and find the worst one. The nonlinear one takes much longer, but it's the only way to check that the joints hold and to set the torque spec and bolt grade. We used the nonlinear results to pick both: M8 12.9 bolts at 36 N·m dry (27 N·m oiled), with hardened washers under the heads and nuts.
 
-### Checking the top bracket by hand
+### Checking the joints by hand
 
-I didn't want to trust the nonlinear model without a quick hand check on whether the top bracket should slip. A bolted joint holds by friction, so the most shear it can carry before it slips is the clamp force times the friction coefficient:
+I didn't want to trust the nonlinear model without a quick hand check on whether the brackets should slip. A bolted joint holds by friction, so the most shear it can carry before it slips is the clamp force times the friction coefficient:
 
 ```text
 F_slip = μ · n · F_preload
@@ -108,7 +122,9 @@ At 36 N·m an M8 12.9 bolt should give about 22.8 kN of preload. Torque is a rou
 F_slip = 0.15 × 2 × 17.1 kN = 5.1 kN
 ```
 
-In Brake + Corner, the upper pickup puts 2.15 kN through the top bracket. That gives a margin of about 2.4 against slip, and still about 1.6 if the friction drops to μ = 0.1. I treated the whole force as shear, which overestimates the shear on the joint, so the real margin is a bit higher.
+The biggest load through the top bracket is in the 3g bump, where the upper pickup puts 2.65 kN through it. That gives a margin of about 1.9 against slip, and still about 1.3 if the friction drops to μ = 0.1. I treated the whole force as shear, which overestimates the shear on the joint, so the real margin is a bit higher.
+
+The steering bracket started out with a single bolt, but we were worried one bolt wouldn't keep it in alignment, so it now has two as well. That also helps with slip. Its biggest load is 2.23 kN in Brake + Corner, which gives a margin of about 2.3, or 1.5 at μ = 0.1. With one bolt it would only have been 1.15, and at μ = 0.1 friction alone wouldn't have held it.
 
 The bolts and the knuckle also have to survive the top end of the scatter, 28.5 kN:
 
@@ -121,7 +137,7 @@ That's 71% of the bolt's 1,100 MPa yield, and well under the roughly 460 MPa yie
 
 Without a washer, a bare socket head would press about 370 MPa into the aluminium, which is too close to yield. That's why the washers are hardened.
 
-The hand calculation agrees with the nonlinear result that the top bracket sticks. What it can't capture is the moment from the pickup sitting out from the joint, which tries to peel the bracket off at one edge. That shows up in Ansys as the ring of "near" contact around the edges, and it's why I still needed the nonlinear model.
+The hand calculation agrees with the nonlinear result that both brackets stick. What it can't capture is the moment from the pickup sitting out from the joint, which tries to peel the bracket off at one edge. That shows up in Ansys as the ring of "near" contact around the edges, and it's why I still needed the nonlinear model.
 
 ## What the results changed
 
