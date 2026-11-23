@@ -48,6 +48,10 @@ The suspension team and I worked on them together. My main job was the simulatio
 
 We generated the load cases in OptimumK for the different situations the suspension will see: maximum cornering, braking while cornering, maximum braking and a 3g bump. Each one gives the forces at the upper and lower ball joints and at the steering pickup. In Ansys I applied those through remote points at the joints, so the load goes into the part the way it would on the car, and held the knuckle at the bearing bore.
 
+Here's the setup for Brake + Corner. The lower pickup takes the most, at about 4.2 kN, with roughly 2.1 kN at the upper pickup and 2.2 kN at the steering arm. The 515 N·m of brake torque goes in through the caliper mounts, and the bearing bore is held fixed:
+
+![Ansys setup for the Brake + Corner case on the front knuckle: 2145.6 N at the upper pickup, 2230.2 N at the steering arm, 4157.5 N at the lower pickup, 515 N·m braking torque at the caliper mounts, and a fixed support at the bearing bore](/projects/uprights-2027/setup-brake-corner.png)
+
 ## Two ways of simulating the same part
 
 I simulated the knuckle in two different ways, and they don't give quite the same answer. Most of what I learned on this project came from understanding why.
