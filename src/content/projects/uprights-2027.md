@@ -9,8 +9,8 @@ tools:
   - OptimumK
   - Onshape
 stage: Analysis
-cover: /projects/uprights-2027/front-knuckle.png
-coverAlt: Render of the 2027 front knuckle with its bolt-on upper pickup bracket and steering bracket shown in a darker grey
+cover: /projects/uprights-2027/new-front-view.png
+coverAlt: Front view of the final 2027 front knuckle in Onshape, with the bolt-on brackets shown see-through
 metrics:
   - value: '2.29'
     label: minimum safety factor, nonlinear bolted model
@@ -19,9 +19,6 @@ metrics:
   - value: 80 mm
     label: bearings, now in the knuckle (was 62 mm in the hub)
 gallery:
-  - image: /projects/uprights-2027/new-front-view.png
-    alt: Front view of the final knuckle in Onshape, with the brackets shown see-through
-    caption: The final front knuckle in Onshape, brackets shown see-through.
   - image: /projects/uprights-2027/nonlinear-contact-pressure.png
     alt: Ansys contact pressure plot on the two bracket faces, peaking at 172 MPa around the bolt holes
     caption: Contact pressure under the brackets in the Max Brake case. It peaks at 172 MPa right around the bolt holes, where the preload is.
@@ -33,13 +30,13 @@ draft: true
 
 After competition we got a lot of feedback on the 2026 uprights, so they changed a lot for 2027.
 
-This is the 2026 front knuckle on the car. It's built up from plates, and you can see the welds near the bottom:
+This is the 2026 front knuckle on the car. It's made from smaller CNC machined parts welded together, and you can see the welds near the bottom:
 
 ![The 2026 front knuckle fitted to the car inside the 10 inch wheel, with the wishbones, steering arm and brake disc attached and welds visible near the lower bracket](/projects/uprights-2027/knuckle-2026-fitted.jpg)
 
 And the same part in CAD:
 
-![The 2026 front knuckle in Onshape, built up from plates, with a small spindle and the bearings in the hub rather than the knuckle](/projects/uprights-2027/knuckle-2026.png)
+![The 2026 front knuckle in Onshape, made from smaller machined parts welded together, with a small spindle and the bearings in the hub rather than the knuckle](/projects/uprights-2027/knuckle-2026.png)
 
 The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted in the knuckle and spaced well apart. The material went from 6061 to 7075 aluminium for strength, and the knuckle is fully machined now, with no welding at all. The upper pickup bracket and the steering bracket bolt on.
 
@@ -116,5 +113,3 @@ The biggest change in the final version is the step inwards on the top bracket m
 ## Where it's at
 
 I'm running the same process on the rear knuckles now: OptimumK load cases, linear runs to find the worst ones, then nonlinear runs for the joints.
-
-![Render of the 2027 rear knuckle, which is still being simulated](/projects/uprights-2027/rear-knuckle.png)
