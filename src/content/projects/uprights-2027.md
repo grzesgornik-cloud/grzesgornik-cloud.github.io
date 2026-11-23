@@ -23,7 +23,7 @@ gallery:
     alt: Ansys contact pressure plot on the two bracket faces, peaking at 172 MPa around the bolt holes
     caption: Contact pressure under the brackets in the Brake + Corner case. It peaks at 172 MPa right around the bolt holes, where the preload is.
 order: 2
-draft: true
+draft: false
 ---
 
 ## What changed this year
