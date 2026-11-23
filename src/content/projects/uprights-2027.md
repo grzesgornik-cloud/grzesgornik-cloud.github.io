@@ -38,9 +38,11 @@ And the same part in CAD:
 
 ![The 2026 front knuckle in Onshape, made from smaller machined parts welded together, with a small spindle and the bearings in the hub rather than the knuckle](/projects/uprights-2027/knuckle-2026.png)
 
-The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted in the knuckle and spaced well apart. The material went from 6061 to 7075 aluminium for strength, and the knuckle is fully machined now, with no welding at all. The upper pickup bracket and the steering bracket bolt on.
+The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted in the knuckle and spaced well apart. The knuckle is fully machined now, with no welding at all, and the upper pickup bracket and the steering bracket bolt on.
 
 The wheels are also going from 13 inch to 10 inch for 2027, and fitting everything inside the smaller wheel was a huge challenge. There's very little clearance to the rim once you fit 80 mm bearings, two brackets and enough material around them.
+
+That's also what decided the material. We started the 2027 knuckle in 6061, the same as last year, and it failed. 6068 failed too. A 6000 series knuckle could have worked with extra material, but then it wouldn't have cleared the wheel. So we went to 7075, which is much stronger and let us keep the part the size it needed to be.
 
 The suspension team and I worked on them together. My main job was the simulation, and I helped with the redesign when the results showed the first version wasn't strong enough.
 
@@ -103,6 +105,8 @@ The Brake + Corner case showed two problems. The plates of the lower bracket wer
 And the minimum, 0.77, sat in the sharp corner where the upper bracket meets the knuckle:
 
 ![Close-up of the earlier knuckle under Brake + Corner, with the minimum safety factor of 0.77 marked in the sharp corner where the upper bracket meets the knuckle](/projects/uprights-2027/early-brake-corner-fillet-sf.png)
+
+We tried refining the mesh there first, but that only made it worse. A perfectly sharp corner is a singularity in FEA: the stress there has no real value, so the finer the mesh, the higher the number goes, and it never settles. Instead of chasing it, we changed the geometry and added fillets so the stress had a real radius to spread over. That's what led to the recess in the final version.
 
 The 3g bump case didn't quite fail, but at 1.10 it was nowhere near the target, and the weak spot was the same kind of place, a sharp corner:
 
