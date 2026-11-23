@@ -72,12 +72,14 @@ One of the concept frames was also where we compared tube sizes. We ran the same
 
 I used the displacement plots from the FEA to see which points were moving the most and in which direction, and added tubes to triangulate those areas, so bays that had been bending now carry their load in tension and compression. That's where the two-tier layout at the back of the chassis came from. Not every tube was worth it, though. Cross braces in the main hoop supports did very little, while bracing the cockpit opening fore and aft to the front hoop made a big difference early on. Following that through led to a fully braced frame.
 
-Then, late in the design, our sponsor was able to supply 30 × 2 mm and 28 × 2 mm tube, where last year's car used 25 mm. Most of the extra stiffness came from the bigger tubes, and with them the frame needed much less bracing, so we took out any tube that wasn't doing much. Drag the slider to compare the fully braced frame with the final one:
+That braced frame was all 28 mm outside diameter: 28 × 2.5 mm for the roll hoops and some of the supports, and 28 × 1.5 mm everywhere else. Late in the design, to fit what our sponsor could supply, we moved to 30 × 2 mm for the roll hoops and 28 × 2 mm everywhere else. Last year's car used 25 mm tube. In the pictures, the thicker tubes are gold and the standard ones are pink.
 
-<div class="compare" data-before="Fully braced, before 30 mm tube" data-after="Final frame">
+Most of the extra stiffness came from those bigger tubes and from putting tubes only where they did the most work. With the heavier walls, the frame needed much less bracing, so we took out any tube that wasn't doing much. Drag the slider to compare the fully braced frame with the final one:
 
-![The fully braced frame from before the move to 30 mm tube, with extra diagonal braces in the front section](/projects/chassis-2027/compare-braced.png)
-![The final frame from the same angle, with fewer braces, bigger tubes and the suspension and seat mounts shown in teal](/projects/chassis-2027/compare-final.png)
+<div class="compare" data-before="Fully braced, all 28 mm tube" data-after="Final frame">
+
+![The fully braced frame in 28 mm tube, with extra diagonal braces in the front section](/projects/chassis-2027/compare-braced.png)
+![The final frame from the same angle, with fewer braces, 30 mm roll hoops and 28 × 2 mm tube elsewhere, and the suspension and seat mounts shown in teal](/projects/chassis-2027/compare-final.png)
 
 </div>
 
