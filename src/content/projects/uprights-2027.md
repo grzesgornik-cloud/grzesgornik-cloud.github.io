@@ -113,3 +113,6 @@ The biggest change in the final version is the step inwards on the top bracket m
 ## Where it's at
 
 I'm running the same process on the rear knuckles now: OptimumK load cases, linear runs to find the worst ones, then nonlinear runs for the joints.
+
+![The 2027 rear knuckle in Onshape, with its two bolt-on brackets shown in grey and yellow](/projects/uprights-2027/rear-knuckle.png)
+
