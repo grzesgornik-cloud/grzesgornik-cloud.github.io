@@ -110,3 +110,12 @@ p { margin: 0; }
   html { scroll-behavior: auto; }
   @view-transition { navigation: none; }
 }
+
+/* ---------- Before/after compare (project write-ups) ---------- */
+.compare { margin-block: var(--s6); }
+.compare > p { position: relative; display: grid; margin: 0; overflow: hidden; border-radius: var(--radius); }
+.compare img { grid-area: 1 / 1; width: 100%; margin: 0; border-radius: 0; }
+.compare img + img { clip-path: inset(0 0 0 var(--pos, 50%)); }
+.compare > p::after { content: ''; position: absolute; inset-block: 0; left: var(--pos, 50%); width: 2px; margin-left: -1px; background: var(--accent); pointer-events: none; }
+.compare__labels { display: flex; justify-content: space-between; gap: var(--s4); margin-top: var(--s3); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.compare__range { width: 100%; margin-top: var(--s3); accent-color: var(--accent); cursor: ew-resize; }

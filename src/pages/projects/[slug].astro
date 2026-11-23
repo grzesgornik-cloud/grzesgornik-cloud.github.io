@@ -107,6 +107,26 @@ const large = await Promise.all(p.gallery.map((g) => getImage({ src: img(g.image
     }, { rootMargin: '-20% 0px -70% 0px' });
     links.forEach((l) => { const t = document.getElementById(l.hash.slice(1)); if (t) io.observe(t); });
   }
+  // Before/after sliders: two stacked images, the second revealed from the handle rightwards.
+  document.querySelectorAll<HTMLElement>('.compare').forEach((box) => {
+    const stage = box.querySelector('p');
+    if (!stage || stage.querySelectorAll('img').length < 2) return;
+    const range = document.createElement('input');
+    range.type = 'range'; range.min = '0'; range.max = '100'; range.value = '50';
+    range.className = 'compare__range';
+    range.setAttribute('aria-label', `Compare: ${box.dataset.before} and ${box.dataset.after}`);
+    const set = () => stage.style.setProperty('--pos', `${range.value}%`);
+    range.addEventListener('input', set);
+    const labels = document.createElement('div');
+    labels.className = 'compare__labels';
+    for (const text of [box.dataset.before, box.dataset.after]) {
+      const span = document.createElement('span');
+      span.textContent = text ?? '';
+      labels.append(span);
+    }
+    box.append(range, labels);
+    set();
+  });
   const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
   if (dialog) {
     const img = dialog.querySelector('img')!;
@@ -117,7 +137,7 @@ const large = await Promise.all(p.gallery.map((g) => getImage({ src: img(g.image
       });
     });
     // The cover and write-up images open full size too.
-    document.querySelectorAll<HTMLImageElement>('.cover img, .prose img').forEach((el) => {
+    document.querySelectorAll<HTMLImageElement>('.cover img, .prose img:not(.compare img)').forEach((el) => {
       el.style.cursor = 'zoom-in';
       el.tabIndex = 0;
       const go = () => open(el.currentSrc || el.src, el.alt, '');

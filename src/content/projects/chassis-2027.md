@@ -18,6 +18,12 @@ metrics:
   - value: ~54 kg
     label: estimated with all mounts, about 2 kg lighter than 2026
 gallery:
+  - image: /projects/chassis-2027/chassis-v3-5-wip.png
+    alt: Bare chassis frame from the V3.5 iteration, a work-in-progress version from September 2026
+    caption: V3.5, a work-in-progress version from September 2026.
+  - image: /projects/chassis-2027/straight-hoop-variation.png
+    alt: A variation of the frame with a straight main hoop
+    caption: A variation we tried with a straight main hoop.
   - image: /projects/chassis-2027/torsion-deformed-overlay.png
     alt: Ansys total deformation plot with the undeformed chassis overlaid in grey
     caption: The same torsion case with the undeformed frame overlaid, showing how the front of the chassis winds up relative to the rear.
@@ -48,7 +54,7 @@ r         = K / K_ch
 K_ch = K(1 − X)·ρ(1 − ρ) / X
 ```
 
-For our car the total roll stiffness is K = 542 Nm/°, with ρ = 0.52 and w = 0.55, and we allowed an 8% loss. That works out at 1,556 Nm/° at the wheels, about 2.9 times the roll stiffness and 10% stiffer than the rule of thumb would have given us.
+For our car the total roll stiffness is K = 542 Nm/°, with ρ = 0.52 and w = 0.55, and we allowed an 8% loss. That works out at 1,556 Nm/° at the wheels, about 2.9 times the roll stiffness and about 15% stiffer than the rule of thumb would have given us.
 
 The chassis isn't the only thing that flexes, either. The wishbones and uprights add their own compliance, so we gave them a placeholder target of 16,000 Nm/° (roughly ten times the chassis target) until we have FEA or test values for them. For simulation that's about 1,270 N/mm at each corner, assuming a 1.2 m track. Taking that out leaves a chassis-only target of 1,723 Nm/°, which we rounded to 1,750 Nm/°. An earlier version of my report used a higher roll stiffness of 713 Nm/° and came out at about 2,200 Nm/°. The roll stiffness was lowered after that, which brought the target down.
 
@@ -58,21 +64,38 @@ This chart is the same model run across a range of chassis stiffnesses. With thi
 
 ## Three designs, then one
 
-We started with three different chassis designs, cut them down to two, and then took the best parts of both to make one master design.
+We started with three different chassis designs, cut them down to two, and then took the best parts of both to make one master design. The early concepts came from different people on the team, and some were built around last year's suspension hardpoints. A few of those turned out not to be legal under the rules.
 
-![Bare chassis frame from the V3.5 iteration, a work-in-progress version from September 2026](/projects/chassis-2027/chassis-v3-5-wip.png)
+![Four early chassis concepts in Onshape: a teammate's concept, my early version, and two layouts built from the 2026 suspension hardpoints](/projects/chassis-2027/concepts.png)
 
-Most of the extra stiffness came from going to bigger tubes, a mix of 30 mm and 28 mm outside diameter, where last year's car used 25 mm. I also used the displacement plots from the FEA to see which points were moving the most and in which direction, and added tubes to triangulate those areas, so bays that had been bending now carry their load in tension and compression. To pay for the bigger tubes, we took out any tube that wasn't doing much.
+One of the concept frames was also where we compared tube sizes. We ran the same frame in a static analysis with 25 mm, 28 mm and 30 mm tubes, so we knew what each size was worth before committing to one.
+
+I used the displacement plots from the FEA to see which points were moving the most and in which direction, and added tubes to triangulate those areas, so bays that had been bending now carry their load in tension and compression. That's where the two-tier layout at the back of the chassis came from. Not every tube was worth it, though. Cross braces in the main hoop supports did very little, while bracing the cockpit opening fore and aft to the front hoop made a big difference early on. Following that through led to a fully braced frame.
+
+Then, late in the design, our sponsor was able to supply 30 × 2 mm and 28 × 2 mm tube, where last year's car used 25 mm. Most of the extra stiffness came from the bigger tubes, and with them the frame needed much less bracing, so we took out any tube that wasn't doing much. Drag the slider to compare the fully braced frame with the final one:
+
+<div class="compare" data-before="Fully braced, before 30 mm tube" data-after="Final frame">
+
+![The fully braced frame from before the move to 30 mm tube, with extra diagonal braces in the front section](/projects/chassis-2027/compare-braced.png)
+![The final frame from the same angle, with fewer braces, bigger tubes and the suspension and seat mounts shown in teal](/projects/chassis-2027/compare-final.png)
+
+</div>
 
 ## Checking it in Ansys
 
-I checked the design with a beam model in Ansys, with the suspension geometry modelled as rigid. I applied a torque at the front axle with the rear held, and then the other way round. The current design comes out at 1,980 Nm/°, which is 13% over the target and 68% stiffer than the previous chassis.
+I checked the design with a beam model in Ansys, with the suspension geometry modelled as rigid. I applied a torque at the front axle with the rear held, and then the other way round, and measured the twist with a rotation probe across the front suspension mounting points. Stiffness is just the torque divided by that twist.
+
+![Ansys beam model of the chassis with a flexible rotation probe on the front suspension mounting points](/projects/chassis-2027/torsion-probe.png)
+
+The current design comes out at 1,980 Nm/°, which is 13% over the target and 68% stiffer than the previous chassis. Per kilogram of bare frame, that's about 43 Nm/° against roughly 26 for last year's, using the estimate from the chart above.
 
 ![Ansys total deformation plot of the chassis under torsion, largest at the front bulkhead and zero at the rear](/projects/chassis-2027/torsion-deformation.png)
 
-## Weight
+## Weight and material
 
 The bare frame is 46 kg in 1020 steel, the same as last year's. With all the mounts on, we're estimating about 54 kg, which is nearly 2 kg lighter than last year even with the extra mounts for the rockers. That number should firm up once the mounts are finished.
+
+We chose 1020 mainly for cost and how easy it is to weld. College rules mean we can't do any welding ourselves on campus, so we pay a welder to do the chassis and all the mounts, and because 1020 can be MIG welded, that's a lot cheaper. Our sponsor also gives us the 1020 for free.
 
 ## What the method can't tell us
 
