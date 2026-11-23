@@ -92,9 +92,9 @@ The Brake + Corner case showed two problems. The plates of the lower bracket wer
 
 ![Linear Brake + Corner safety factor plot on the earlier knuckle, with red regions below 1 along the plates of the lower bracket](/projects/uprights-2027/early-brake-corner-bracket-sf.png)
 
-And the minimum, 0.77, sat right in a sharp internal corner:
+And the minimum, 0.77, sat in the sharp corner where the upper bracket meets the knuckle:
 
-![Close-up of the earlier knuckle under Brake + Corner, with the minimum safety factor of 0.77 marked in a sharp internal corner](/projects/uprights-2027/early-brake-corner-fillet-sf.png)
+![Close-up of the earlier knuckle under Brake + Corner, with the minimum safety factor of 0.77 marked in the sharp corner where the upper bracket meets the knuckle](/projects/uprights-2027/early-brake-corner-fillet-sf.png)
 
 The 3g bump case didn't quite fail, but at 1.10 it was nowhere near the target, and the weak spot was the same kind of place, a sharp corner:
 
@@ -104,7 +104,7 @@ That version had other problems too. The steering mount was poor, with problems 
 
 ![Side-by-side Onshape views of the earlier knuckle, with sharper edges and a boxy steering mount, and the final version with rounded edges and a stepped top bracket mount](/projects/uprights-2027/old-vs-new.png)
 
-The biggest change in the final version is the step inwards on the top bracket mount. On top of that, the bolt clearances are better all over, and the edges are rounded off. Even with the bigger bearings, the front knuckle with its brackets is 0.823 kg, down from 0.89 kg last year. That doesn't include the bearings or bolts. It will be CNC machined.
+The biggest change in the final version is the step inwards on the top bracket mount. The bracket now sits in a recess instead of meeting the knuckle at a sharp corner, which is exactly where the 0.77 was. On top of that, the bolt clearances are better all over, and the edges are rounded off. Even with the bigger bearings, the front knuckle with its brackets is 0.823 kg, down from 0.89 kg last year. That doesn't include the bearings or bolts. It will be CNC machined.
 
 ## Where it's at
 
