@@ -88,6 +88,7 @@ p { margin: 0; }
 .prose { max-width: 40rem; }
 .prose h2 { font-size: 1.5rem; margin: var(--s8) 0 var(--s4); font-stretch: 110%; }
 .prose h2:first-child { margin-top: 0; }
+.prose h3 { font-size: 1.125rem; font-stretch: 105%; margin: var(--s7) 0 var(--s3); }
 .prose p { margin-bottom: var(--s4); color: #cfcdc7; }
 .prose ul { padding-left: var(--s5); margin: 0 0 var(--s4); color: #cfcdc7; }
 .prose img { border-radius: var(--radius); margin-block: var(--s6); }
