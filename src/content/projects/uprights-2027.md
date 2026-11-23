@@ -33,8 +33,15 @@ draft: true
 
 After competition we got a lot of feedback on the 2026 uprights, so they changed a lot for 2027.
 
+This is the 2026 front knuckle on the car. It's built up from plates, and you can see the welds near the bottom:
+
+![The 2026 front knuckle fitted to the car inside the 10 inch wheel, with the wishbones, steering arm and brake disc attached and welds visible near the lower bracket](/projects/uprights-2027/knuckle-2026-fitted.jpg)
+
+And the same part in CAD:
+
 ![The 2026 front knuckle in Onshape, built up from plates, with a small spindle and the bearings in the hub rather than the knuckle](/projects/uprights-2027/knuckle-2026.png)
- The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted in the knuckle and spaced well apart. The material went from 6061 to 7075 aluminium for strength, and the knuckle is fully machined now, with no welding at all. The upper pickup bracket and the steering bracket bolt on.
+
+The bearings went from 62 mm, sitting in the hub, to 80 mm OD bearings mounted in the knuckle and spaced well apart. The material went from 6061 to 7075 aluminium for strength, and the knuckle is fully machined now, with no welding at all. The upper pickup bracket and the steering bracket bolt on.
 
 It all has to fit inside a 10 inch wheel, which was a huge challenge. There's very little clearance to the rim once you fit 80 mm bearings, two brackets and enough material around them.
 
