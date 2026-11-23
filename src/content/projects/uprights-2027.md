@@ -44,7 +44,7 @@ The wheels are also going from 13 inch to 10 inch for 2027, and fitting everythi
 
 That's also what decided the material. We started the 2027 knuckle in 6061, the same as last year, and it failed in simulation. 6082 failed too. A 6000 series knuckle could have worked with extra material, but then it wouldn't have cleared the wheel. So we went to 7075, which is much stronger and let us keep the part the size it needed to be.
 
-The suspension team and I worked on them together. My main job was the simulation, and I helped with the redesign when the results showed the first version wasn't strong enough.
+The suspension team and I worked on the uprights together. My main job was the simulation, and I helped with the redesign when the results showed the first version wasn't strong enough.
 
 ## Where the loads come from
 
@@ -68,13 +68,13 @@ These are the results for the final design. Loads are in kN, and the minimum saf
 |---|---|---|---|---|---|
 | Brake + Corner (outside) | Steering arm fillet | 2.15 | 4.16 | 2.23 | 2.32 |
 | Max Brake | Lower pickup clevis | 1.67 | 4.60 | 1.98 | 2.54 |
+| 3g Bump | Top bracket, by the bolt holes | 2.65 | 1.04 | 0.27 | 2.60 |
 | Kerb Strike | Top bracket, by the bolt holes | 2.13 | 3.15 | 0.24 | 3.03 |
 | Max Corner (outside) | Below the top bracket | 1.56 | 3.48 | 0.33 | 3.80 |
 | Brake + Corner (inside) | Lower pickup clevis | 0.81 | 2.01 | 0.38 | 7.20 |
-| 3g Bump | – | 2.65 | 1.04 | 0.27 | – |
 | Max Accel | None | 0.09 | 0.03 | 0.01 | over 15 |
 
-Under acceleration the weight moves to the rear, so the front knuckle hardly sees any load. The braking cases are the ones that matter, because the brake torque goes through the knuckle as well: 553 N·m in Max Brake and 515 N·m in Brake + Corner.
+Under acceleration the weight moves to the rear, so the front knuckle hardly sees any load. The two worst cases are both braking cases, because the brake torque goes through the knuckle as well: 515 N·m in Brake + Corner and 553 N·m in Max Brake.
 
 Brake + Corner on the outside wheel came out worst, with a minimum safety factor of 2.32. The weak spot was the fillet where the steering arm joins the body of the knuckle.
 
@@ -90,19 +90,19 @@ The trouble with the linear model is that the brackets aren't actually glued on.
 
 It runs in two steps. Step 1 tightens each bolt to 17.1 kN, and step 2 applies the load on top of that preload. That's how the joint actually sees it on the car.
 
-It's much slower to solve, so I only ran it on the three cases that load the joints hardest: the two worst from the linear runs, and the 3g bump, which puts the biggest load through the top bracket.
+It's much slower to solve, so I only ran it on the three worst cases from the linear runs. The 3g bump is also the case that puts the biggest load through the top bracket.
 
 | Load case | Weak spot (nonlinear) | Linear SF | Nonlinear SF |
 |---|---|---|---|
 | Brake + Corner (outside) | Top bracket bolt holes | 2.32 | 2.29 |
 | Max Brake | Lower pickup clevis | 2.54 | 2.40 |
-| 3g Bump | Top bracket | – | 2.56 |
+| 3g Bump | Top bracket | 2.60 | 2.56 |
 
 Brake + Corner is still the worst case, at 2.29. That's close to the linear answer, but in a completely different place: around the bolt holes on the top bracket instead of the steering arm fillet.
 
-![Ansys safety factor plot for the nonlinear Brake + Corner case on the outside wheel, minimum 2.29 at the bolt holes of the top bracket](/projects/uprights-2027/nonlinear-max-brake-sf.png)
+![Ansys safety factor plot for the nonlinear Brake + Corner case on the outside wheel, minimum 2.29 at the bolt holes of the top bracket](/projects/uprights-2027/nonlinear-brake-corner-sf.png)
 
-The contact results are what this model was really for. Almost all of each bracket face stays sticking, with a ring of "near" contact around the edges where the faces just start to open up. The most any point slides is about 0.025 mm, right at the edge of the top bracket. So the joint holds, and the bolts are clamping rather than taking the load in shear.
+The contact results are what this model was really for. In Brake + Corner, almost all of each bracket face stays sticking, with a ring of "near" contact around the edges where the faces just start to open up. The most any point slides is about 0.025 mm, right at the edge of the top bracket. So the joint holds, and the bolts are clamping rather than taking the load in shear.
 
 ![Ansys contact status plot of the two bracket faces, mostly sticking around the bolts with near contact at the edges](/projects/uprights-2027/nonlinear-contact-status.png)
 
@@ -114,7 +114,7 @@ The two models put the weak spot in different places because they pass the load 
 
 With real bolts and friction, the load goes through the clamped area around each bolt instead. The preload already squeezes the material there before any load is applied, and that's where the contact pressure peaks, at 172 MPa. So the stress concentrates around the holes, and that becomes the critical spot.
 
-Neither model is wrong. They answer different questions. The linear one is fast enough to run every load case and find the worst one. The nonlinear one takes much longer, but it's the only way to check that the joints hold and to set the torque spec and bolt grade. We used the nonlinear results to pick both: M8 12.9 bolts at 36 N·m dry (27 N·m oiled), with hardened washers under the heads and nuts.
+Neither model is wrong. They answer different questions. The linear one is fast enough to run every load case and find the worst one. The nonlinear one takes much longer, but it's the only way to check that the joints hold with the bolts and torque spec we chose: M8 12.9 bolts at 36 N·m dry (27 N·m oiled), with hardened washers under the heads and nuts.
 
 ### Checking the joints by hand
 
@@ -134,7 +134,7 @@ The biggest load through the top bracket is in the 3g bump, where the upper pick
 
 The steering bracket started out with a single bolt, but we were worried one bolt wouldn't keep it in alignment, so it now has two as well. That also helps with slip. Its biggest load is 2.23 kN in Brake + Corner, which gives a margin of about 2.3, or 1.5 at μ = 0.1. With one bolt it would only have been 1.15, and at μ = 0.1 friction alone wouldn't have held it.
 
-The bolts and the knuckle also have to survive the top end of the scatter, 28.5 kN:
+The bolts and the knuckle also have to survive the top end of the scatter, 28.5 kN. From the preload alone:
 
 ```text
 Bolt stress    = 28.5 kN / 36.6 mm² = 779 MPa
@@ -143,7 +143,7 @@ Washer bearing = 28.5 kN / 146 mm²  = 195 MPa
 
 That's 71% of the bolt's 1,100 MPa yield, and well under the roughly 460 MPa yield of 7075.
 
-Without a washer, a bare socket head would press about 370 MPa into the aluminium, which is too close to yield. That's why the washers are hardened.
+Without a washer, a bare socket head would press about 370 MPa into the aluminium at that preload, which is too close to yield. That's why there are hardened washers under the heads and nuts.
 
 The hand calculation agrees with the nonlinear result that both brackets stick. What it can't capture is the moment from the pickup sitting out from the joint, which tries to peel the bracket off at one edge. That shows up in Ansys as the ring of "near" contact around the edges, and it's why I still needed the nonlinear model.
 
@@ -151,13 +151,13 @@ The hand calculation agrees with the nonlinear result that both brackets stick. 
 
 The first version wasn't strong enough. In the linear runs, Brake + Corner came out at a minimum safety factor of 0.77 and the 3g bump at 1.10. Anything under 1 means the material yields, so that version would have failed on the car, and we were aiming for around 2.
 
-The Brake + Corner case showed two problems. The plates of the lower bracket were bending, with red patches along both of them:
+The Brake + Corner case showed two problems. The plates of the lower pickup clevis were bending, with red patches along both of them:
 
-![Linear Brake + Corner safety factor plot on the earlier knuckle, with red regions below 1 along the plates of the lower bracket](/projects/uprights-2027/early-brake-corner-bracket-sf.png)
+![Linear Brake + Corner safety factor plot on the earlier knuckle, with red regions below 1 along the plates of the lower pickup clevis](/projects/uprights-2027/early-brake-corner-bracket-sf.png)
 
-And the minimum, 0.77, sat in the sharp corner where the upper bracket meets the knuckle:
+And the minimum, 0.77, sat in the sharp corner where the top bracket meets the knuckle:
 
-![Close-up of the earlier knuckle under Brake + Corner, with the minimum safety factor of 0.77 marked in the sharp corner where the upper bracket meets the knuckle](/projects/uprights-2027/early-brake-corner-fillet-sf.png)
+![Close-up of the earlier knuckle under Brake + Corner, with the minimum safety factor of 0.77 marked in the sharp corner where the top bracket meets the knuckle](/projects/uprights-2027/early-brake-corner-fillet-sf.png)
 
 We tried refining the mesh there first, but that only made it worse. A perfectly sharp corner is a singularity in FEA: the stress there has no real value, so the finer the mesh, the higher the number goes, and it never settles. Instead of chasing it, we changed the geometry and added fillets so the stress had a real radius to spread over. That's what led to the recess in the final version.
 
@@ -165,11 +165,11 @@ The 3g bump case didn't quite fail, but at 1.10 it was nowhere near the target, 
 
 ![Close-up of the earlier knuckle under a 3g bump, with a small red region and a minimum safety factor of 1.10 at a sharp corner](/projects/uprights-2027/early-3g-bump-sf.png)
 
-That version had other problems too. The steering mount was poor, with problems with bolt clearance and with clearance to the suspension wishbones. The sharp edges were where the stress was collecting, so rounding them off was one of the main fixes.
+That version had other problems too. The steering mount was poor: the bolts didn't have enough clearance, and it sat too close to the suspension wishbones. The sharp edges were where the stress was collecting, so rounding them off was one of the main fixes.
 
 ![Side-by-side Onshape views of the earlier knuckle, with sharper edges and a boxy steering mount, and the final version with rounded edges and a stepped top bracket mount](/projects/uprights-2027/old-vs-new.png)
 
-The biggest change in the final version is the step inwards on the top bracket mount. The bracket now sits in a recess instead of meeting the knuckle at a sharp corner, which is exactly where the 0.77 was. On top of that, the bolt clearances are better all over, and the edges are rounded off. Even with the bigger bearings, the front knuckle with its brackets is 0.823 kg, down from 0.89 kg last year. That doesn't include the bearings or bolts. It will be CNC machined.
+The biggest change in the final version is the step inwards on the top bracket mount. The bracket now sits in a recess instead of meeting the knuckle at a sharp corner, which is exactly where the 0.77 was. On top of that, the bolt clearances are better all over, and the edges are rounded off. Even with the bigger bearings, the front knuckle with its brackets is 0.823 kg, down from 0.89 kg last year. That doesn't include the bearings or bolts.
 
 ## Where it's at
 
