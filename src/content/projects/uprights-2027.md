@@ -21,7 +21,7 @@ metrics:
 gallery:
   - image: /projects/uprights-2027/nonlinear-contact-pressure.png
     alt: Ansys contact pressure plot on the two bracket faces, peaking at 172 MPa around the bolt holes
-    caption: Contact pressure under the brackets in the Max Brake case. It peaks at 172 MPa right around the bolt holes, where the preload is.
+    caption: Contact pressure under the brackets in the Brake + Corner case. It peaks at 172 MPa right around the bolt holes, where the preload is.
 order: 2
 draft: true
 ---
@@ -67,14 +67,14 @@ These are the results for the final design. Loads are in kN, and the minimum saf
 | Load case | Weak spot | Upper | Lower | Steering | Min SF |
 |---|---|---|---|---|---|
 | Brake + Corner (outside) | Steering arm fillet | 2.15 | 4.16 | 2.23 | 2.32 |
-| Max Brake | Lower pickup clevis | – | – | – | 2.54 |
+| Max Brake | Lower pickup clevis | 1.67 | 4.60 | 1.98 | 2.54 |
 | Kerb Strike | Top bracket, by the bolt holes | 2.13 | 3.15 | 0.24 | 3.03 |
 | Max Corner (outside) | Below the top bracket | 1.56 | 3.48 | 0.33 | 3.80 |
 | Brake + Corner (inside) | Lower pickup clevis | 0.81 | 2.01 | 0.38 | 7.20 |
 | 3g Bump | – | 2.65 | 1.04 | 0.27 | – |
 | Max Accel | None | 0.09 | 0.03 | 0.01 | over 15 |
 
-Under acceleration the weight moves to the rear, so the front knuckle hardly sees any load. The braking cases are the ones that matter, because the brake torque (515 N·m on the outside wheel) goes through the knuckle as well.
+Under acceleration the weight moves to the rear, so the front knuckle hardly sees any load. The braking cases are the ones that matter, because the brake torque goes through the knuckle as well: 553 N·m in Max Brake and 515 N·m in Brake + Corner.
 
 Brake + Corner on the outside wheel came out worst, with a minimum safety factor of 2.32. The weak spot was the fillet where the steering arm joins the body of the knuckle.
 
@@ -86,13 +86,21 @@ Zoomed in, it's a small area right on the edge of the fillet, a few millimetres 
 
 ### Nonlinear: modelling the bolted joints
 
-The trouble with the linear model is that the brackets aren't actually glued on. They're held by bolts, and what matters is whether the clamping force is enough to stop them from slipping. So for the worst cases I built a nonlinear model with the real joints in it. It has bolt pretension on all four bolts, and frictional contact between each bracket and the knuckle, so the faces can stick, slide or separate.
+The trouble with the linear model is that the brackets aren't actually glued on. They're held by bolts, and what matters is whether the clamping force is enough to stop them from slipping. So I built a nonlinear model with the real joints in it. It has bolt pretension on all four bolts, and frictional contact between each bracket and the knuckle, so the faces can stick, slide or separate.
 
-It runs in two steps. Step 1 tightens the bolts, and step 2 applies the load on top of that preload. That's how the joint actually sees it on the car.
+It runs in two steps. Step 1 tightens each bolt to 17.1 kN, and step 2 applies the load on top of that preload. That's how the joint actually sees it on the car.
 
-In the Max Brake case, the minimum safety factor came out at 2.29. That's close to the linear answer, but in a completely different place: around the bolt holes on the top bracket.
+It's much slower to solve, so I only ran it on the three cases that load the joints hardest: the two worst from the linear runs, and the 3g bump, which puts the biggest load through the top bracket.
 
-![Ansys safety factor plot for the nonlinear Max Brake case, minimum 2.29 at the bolt holes of the top bracket](/projects/uprights-2027/nonlinear-max-brake-sf.png)
+| Load case | Weak spot (nonlinear) | Linear SF | Nonlinear SF |
+|---|---|---|---|
+| Brake + Corner (outside) | Top bracket bolt holes | 2.32 | 2.29 |
+| Max Brake | Lower pickup clevis | 2.54 | 2.40 |
+| 3g Bump | Top bracket | – | 2.56 |
+
+Brake + Corner is still the worst case, at 2.29. That's close to the linear answer, but in a completely different place: around the bolt holes on the top bracket instead of the steering arm fillet.
+
+![Ansys safety factor plot for the nonlinear Brake + Corner case on the outside wheel, minimum 2.29 at the bolt holes of the top bracket](/projects/uprights-2027/nonlinear-max-brake-sf.png)
 
 The contact results are what this model was really for. Almost all of each bracket face stays sticking, with a ring of "near" contact around the edges where the faces just start to open up. The most any point slides is about 0.025 mm, right at the edge of the top bracket. So the joint holds, and the bolts are clamping rather than taking the load in shear.
 
